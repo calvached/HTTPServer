@@ -1,16 +1,16 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'echo.EchoServer'
+mainClassName = 'main.java.server.HttpServer'
 
 jar {
     baseName = 'http-server'
     version =  '0.1.0'
     manifest {
-        attributes 'Main-Class': 'server.HttpServer'
+        attributes 'Main-Class': 'main.java.server.HttpServer'
     }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
+    gradleVersion = '2.3'
 }
