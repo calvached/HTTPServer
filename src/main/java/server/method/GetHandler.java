@@ -15,6 +15,8 @@ public class GetHandler {
     public void handle(Request request) throws IOException {
         if (request.url().equals("/")) {
             builder.createSuccessfulResponse();
+        } else {
+            builder.createFourOhFour();
         }
     }
 }
