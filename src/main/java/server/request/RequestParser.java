@@ -33,7 +33,7 @@ public class RequestParser {
     }
 
     public String getUrl() {
-        Pattern url = Pattern.compile("^\\w+\\s(/\\w*).+");
+        Pattern url = Pattern.compile("^\\w+\\s(/\\w*\\.?\\w*).+");
         Matcher urlMatcher = url.matcher(requestString);
 
         urlMatcher.find();

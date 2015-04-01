@@ -15,6 +15,9 @@ public class GetHandler {
     public void handle(Request request) throws IOException {
         if (request.url().equals("/")) {
             builder.createSuccessfulResponse();
+        }
+        else if (request.url().equals("/sample.pdf")) {
+            builder.serveContent("public" + request.url());
         } else {
             builder.createFourOhFour();
         }

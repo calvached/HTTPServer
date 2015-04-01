@@ -42,6 +42,22 @@ public class RequestParserTest {
     public void itReturnsAnIndexUrl() throws Exception {
         String requestString =
                 "GET / HTTP/1.0\n"+
+                "From: frog@jmarshall.com\n"+
+                "User-Agent: HTTPTool/1.0\n"+
+                "Content-Type: application/x-www-form-urlencoded\n"+
+                "Content-Length: 32\n"+
+                "\n";
+
+        RequestParser parser = new RequestParser(requestString);
+        String url = parser.getUrl();
+
+        assertEquals("/", url);
+    }
+
+    @Test
+    public void itReturnsAUrlWithAFileExtension() throws Exception {
+        String requestString =
+                "GET /sample.pdf HTTP/1.0\n"+
                         "From: frog@jmarshall.com\n"+
                         "User-Agent: HTTPTool/1.0\n"+
                         "Content-Type: application/x-www-form-urlencoded\n"+
@@ -51,7 +67,7 @@ public class RequestParserTest {
         RequestParser parser = new RequestParser(requestString);
         String url = parser.getUrl();
 
-        assertEquals("/", url);
+        assertEquals("/sample.pdf", url);
     }
 
     @Test

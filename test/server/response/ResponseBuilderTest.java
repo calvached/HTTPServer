@@ -34,4 +34,18 @@ public class ResponseBuilderTest {
 
         assertEquals("HTTP/1.1 404 Not Found", mockOutputStream.toString().trim());
     }
+
+    @Test
+    public void itServesContent() throws Exception {
+        ByteArrayOutputStream mockOutputStream =
+                new ByteArrayOutputStream();
+
+        ResponseWriter writer = new ResponseWriter(mockOutputStream);
+        ResponseBuilder builder = new ResponseBuilder(writer);
+
+        builder.serveContent("public/sample.pdf");
+        Integer contentSize = mockOutputStream.size();
+
+        assertEquals((Integer) 7945, contentSize);
+    }
 }

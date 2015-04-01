@@ -36,6 +36,30 @@ public class GetHandlerTest {
     }
 
     @Test
+    public void servesAFile() throws Exception {
+        HashMap attributes = new HashMap();
+        attributes.put("requestMethod", "GET");
+        attributes.put("url", "/sample.pdf");
+        attributes.put("data", null);
+
+        ByteArrayOutputStream mockOutputStream =
+                new ByteArrayOutputStream();
+
+        Request request = new Request(attributes);
+
+        ResponseBuilder builder =
+                new ResponseBuilder(
+                        new ResponseWriter(mockOutputStream));
+
+        GetHandler get = new GetHandler(builder);
+        assertEquals(0, mockOutputStream.size());
+
+        get.handle(request);
+
+        assertEquals(7945, mockOutputStream.size());
+    }
+
+    @Test
     public void respondsWithA404IfGETRouteDoesNotExist() throws Exception {
         HashMap attributes = new HashMap();
         attributes.put("requestMethod", "GET");
