@@ -1,6 +1,8 @@
 package main.java.server.response;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +38,16 @@ public class ResponseBuilder {
             e.printStackTrace();
         }
 
+    }
+
+    public void serveContent(String path) {
+        Path filePath = Paths.get(path);
+
+        try {
+            writer.write(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
