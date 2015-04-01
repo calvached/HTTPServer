@@ -1,0 +1,89 @@
+package server.request;
+
+import main.java.server.request.RequestParser;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+public class RequestParserTest {
+    @Test
+    public void itReturnsARequestMethod() throws Exception {
+        String requestString =
+                "GET /form HTTP/1.0\n"+
+                "From: frog@jmarshall.com\n"+
+                "User-Agent: HTTPTool/1.0\n"+
+                "Content-Type: application/x-www-form-urlencoded\n"+
+                "Content-Length: 32\n"+
+                "\n";
+
+        RequestParser parser = new RequestParser(requestString);
+        String method = parser.getRequestMethod();
+
+        assertEquals("GET", method);
+    }
+
+    @Test
+    public void itReturnsALongUrl() throws Exception {
+        String requestString =
+                "GET /form HTTP/1.0\n"+
+                "From: frog@jmarshall.com\n"+
+                "User-Agent: HTTPTool/1.0\n"+
+                "Content-Type: application/x-www-form-urlencoded\n"+
+                "Content-Length: 32\n"+
+                "\n";
+
+        RequestParser parser = new RequestParser(requestString);
+        String url = parser.getUrl();
+
+        assertEquals("/form", url);
+    }
+
+    @Test
+    public void itReturnsAnIndexUrl() throws Exception {
+        String requestString =
+                "GET / HTTP/1.0\n"+
+                        "From: frog@jmarshall.com\n"+
+                        "User-Agent: HTTPTool/1.0\n"+
+                        "Content-Type: application/x-www-form-urlencoded\n"+
+                        "Content-Length: 32\n"+
+                        "\n";
+
+        RequestParser parser = new RequestParser(requestString);
+        String url = parser.getUrl();
+
+        assertEquals("/", url);
+    }
+
+    @Test
+    public void itReturnsPostedData() throws Exception {
+        String requestString =
+                "POST /form HTTP/1.0\n"+
+                "From: frog@jmarshall.com\n"+
+                "User-Agent: HTTPTool/1.0\n"+
+                "Content-Type: application/x-www-form-urlencoded\n"+
+                "Content-Length: 32\n"+
+                "\n"+
+                "name=diana";
+
+        RequestParser parser = new RequestParser(requestString);
+        String data = parser.getPostedData();
+
+        assertEquals("name=diana", data);
+    }
+
+    @Test
+    public void returnsNullIfDataDoesNotExist() throws Exception {
+        String requestString =
+                "GET /form HTTP/1.0\n"+
+                "From: frog@jmarshall.com\n"+
+                "User-Agent: HTTPTool/1.0\n"+
+                "Content-Type: application/x-www-form-urlencoded\n"+
+                "Content-Length: 32\n"+
+                "\n";
+
+        RequestParser parser = new RequestParser(requestString);
+        String data = parser.getPostedData();
+
+        assertEquals(null, data);
+    }
+}
