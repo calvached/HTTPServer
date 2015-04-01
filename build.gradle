@@ -1,13 +1,13 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'main.java.server.HttpServer'
+mainClassName = 'main.java.main.Main'
 
 jar {
     baseName = 'http-server'
     version =  '0.1.0'
     manifest {
-        attributes 'Main-Class': 'main.java.server.HttpServer'
+        attributes 'Main-Class': 'main.java.main.Main'
     }
 }
 
