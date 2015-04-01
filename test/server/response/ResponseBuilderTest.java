@@ -2,23 +2,36 @@ package server.response;
 
 import main.java.server.response.ResponseBuilder;
 import main.java.server.response.ResponseWriter;
-import mocks.MockOutputStream;
 import org.junit.Test;
+
+import java.io.ByteArrayOutputStream;
 
 import static org.junit.Assert.assertEquals;
 
 public class ResponseBuilderTest {
     @Test
-    public void itWritesAStringToTheStream() throws Exception {
-        MockOutputStream out = new MockOutputStream();
-        ResponseWriter writer = new ResponseWriter(out);
+    public void itWritesASuccessfulResponseToTheStream() throws Exception {
+        ByteArrayOutputStream mockOutputStream =
+                new ByteArrayOutputStream();
 
+        ResponseWriter writer = new ResponseWriter(mockOutputStream);
         ResponseBuilder builder = new ResponseBuilder(writer);
-
-        assertEquals(false, out.successfulWrite);
 
         builder.createSuccessfulResponse();
 
-        assertEquals(true, out.successfulWrite);
+        assertEquals("HTTP/1.1 200 OK", mockOutputStream.toString().trim());
+    }
+
+    @Test
+    public void itWritesAFourOhFourResponseToTheStream() throws Exception {
+        ByteArrayOutputStream mockOutputStream =
+                new ByteArrayOutputStream();
+
+        ResponseWriter writer = new ResponseWriter(mockOutputStream);
+        ResponseBuilder builder = new ResponseBuilder(writer);
+
+        builder.createFourOhFour();
+
+        assertEquals("HTTP/1.1 404 Not Found", mockOutputStream.toString().trim());
     }
 }

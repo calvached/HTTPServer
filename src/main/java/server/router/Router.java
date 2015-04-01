@@ -27,7 +27,7 @@ public class Router {
         request = requestBuilder.getRequest();
 
         if (requestMethods.get(request.method()) == null) {
-            System.out.println("request method is null");
+            responseBuilder.createFourOhFour();
         } else {
             requestMethods.get(request.method()).run();
         }
