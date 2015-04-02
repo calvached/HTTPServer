@@ -3,20 +3,14 @@ package main.java.server.response;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ResponseBuilder {
     private ResponseWriter writer;
-    private static final Map<Integer, String> statusCodes;
+    private static final Map<Integer, String> statusCodeHeaders;
 
     static {
-        Map<Integer, String> statusMap = new HashMap<>();
-        statusMap.put(200, "HTTP/1.1 200 OK");
-        statusMap.put(404, "HTTP/1.1 404 Not Found");
-
-        statusCodes = Collections.unmodifiableMap(statusMap);
+        statusCodeHeaders = new StatusCodes().headerLines;
     }
 
     public ResponseBuilder(ResponseWriter responseWriter) {
@@ -25,7 +19,7 @@ public class ResponseBuilder {
 
     public void createSuccessfulResponse() {
         try {
-            writer.write(statusCodes.get(200));
+            writer.write(statusCodeHeaders.get(200));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -33,7 +27,7 @@ public class ResponseBuilder {
 
     public void createFourOhFour() {
         try {
-            writer.write(statusCodes.get(404));
+            writer.write(statusCodeHeaders.get(404));
         } catch (IOException e) {
             e.printStackTrace();
         }
