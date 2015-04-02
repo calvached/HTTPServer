@@ -19,12 +19,12 @@ public class RequestBuilderTest {
     @Test
     public void itBuildsARequestObjectWithAttributes() throws Exception {
         String[] inputRequest = {
-                "POST /hi HTTP/1.0\n",
-                "From: frog@jmarshall.com\n",
-                "User-Agent: HTTPTool/1.0\n",
-                "Content-Type: application/x-www-form-urlencoded\n",
+                "POST /hi HTTP/1.0",
+                "From: frog@jmarshall.com",
+                "User-Agent: HTTPTool/1.0",
+                "Content-Type: application/x-www-form-urlencoded",
                 "Content-Length: 32",
-                "\r\n\r\n",
+                "\n",
                 "name=diana"
         };
 

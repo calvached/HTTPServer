@@ -21,7 +21,7 @@ public class RequestReader {
 
         try {
             while (reader.ready()) {
-                request += reader.readLine();
+                request += reader.readLine() + "\n";
             }
         } catch (IOException e) {
             e.printStackTrace();
