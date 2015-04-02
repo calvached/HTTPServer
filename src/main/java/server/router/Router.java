@@ -1,6 +1,7 @@
 package main.java.server.router;
 
 import main.java.server.method.GetHandler;
+import main.java.server.method.PostHandler;
 import main.java.server.request.Request;
 import main.java.server.request.RequestBuilder;
 import main.java.server.request.RequestReader;
@@ -18,12 +19,12 @@ public class Router {
 
     public Router() {
         requestMethods.put("GET", Router.this::getMethod);
+        requestMethods.put("POST", Router.this::postMethod);
     }
 
     public void handleTrafficFor(InputStream in, OutputStream out){
         RequestBuilder requestBuilder = createRequestBuilder(in);
         responseBuilder = createResponseBuilder(out);
-
         request = requestBuilder.getRequest();
 
         if (requestMethods.get(request.method()) == null) {
@@ -41,6 +42,12 @@ public class Router {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void postMethod() {
+        PostHandler get = new PostHandler(responseBuilder);
+
+        get.handle(request);
     }
 
     private RequestBuilder createRequestBuilder(InputStream in) {
