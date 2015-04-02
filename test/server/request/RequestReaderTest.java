@@ -13,11 +13,10 @@ public class RequestReaderTest {
     @Test
     public void concatenatesARequestIntoAString() throws Exception {
         String[] requestLines = {
-                "GET /localhost:5000/hi HTTP/1.0\n",
-                "Content-Length: 32\n",
-                "\n",
-                "{ name=diana }"
-        };
+                "GET /localhost:5000/hi HTTP/1.0",
+                "Content-Length: 32",
+                "",
+                "{ name=diana }"};
 
         RequestReader reader =
                 new RequestReader(
@@ -31,7 +30,7 @@ public class RequestReaderTest {
                 "GET /localhost:5000/hi HTTP/1.0\n" +
                 "Content-Length: 32\n" +
                 "\n" +
-                "{ name=diana }";
+                "{ name=diana }\n";
 
         assertEquals(expectedRequest, request);
     }
