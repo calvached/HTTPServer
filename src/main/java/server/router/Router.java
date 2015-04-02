@@ -1,5 +1,6 @@
 package main.java.server.router;
 
+import main.java.server.method.DeleteHandler;
 import main.java.server.method.GetHandler;
 import main.java.server.method.PostHandler;
 import main.java.server.method.PutHandler;
@@ -22,6 +23,7 @@ public class Router {
         requestMethods.put("GET", Router.this::getMethod);
         requestMethods.put("POST", Router.this::postMethod);
         requestMethods.put("PUT", Router.this::putMethod);
+        requestMethods.put("DELETE", Router.this::deleteMethod);
     }
 
     public void handleTrafficFor(InputStream in, OutputStream out){
@@ -57,6 +59,16 @@ public class Router {
 
         try {
             put.handle(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteMethod() {
+        DeleteHandler delete = new DeleteHandler(responseBuilder);
+
+        try {
+            delete.handle(request);
         } catch (IOException e) {
             e.printStackTrace();
         }
