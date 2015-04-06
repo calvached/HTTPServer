@@ -1,7 +1,5 @@
 package server.request;
 
-import main.java.server.request.Request;
-import main.java.server.request.RequestBuilder;
 import main.java.server.request.RequestStringReader;
 import org.junit.Test;
 
@@ -13,10 +11,9 @@ import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
 
-public class RequestBuilderTest {
-
+public class RequestStringReaderTest {
     @Test
-    public void itBuildsARequestObjectWithAttributes() throws Exception {
+    public void concatenatesARequestIntoAString() throws Exception {
         String testString = "POST /form HTTP/1.1\nContent-Length: 32\n\n{ name=diana }\n";
         InputStream mockInputStream =
                 new ByteArrayInputStream(
@@ -28,13 +25,13 @@ public class RequestBuilderTest {
                                 new InputStreamReader(
                                         mockInputStream)));
 
-        RequestBuilder builder = new RequestBuilder(reader);
+        String request = reader.getConcatenatedRequest();
+        String expectedRequest =
+                "POST /form HTTP/1.1\n" +
+                "Content-Length: 32\n" +
+                "\n" +
+                "{ name=diana }\n";
 
-        Request request = builder.getRequest();
-
-        assertEquals(Request.class, request.getClass());
-        assertEquals("POST", request.method());
-        assertEquals("/form", request.url());
-        assertEquals("{ name=diana }", request.data());
+        assertEquals(expectedRequest, request);
     }
 }

@@ -2,7 +2,7 @@ package main.java.server.router;
 
 import main.java.server.method.ConnectionHandler;
 import main.java.server.request.Request;
-import main.java.server.request.RequestBuilder;
+import main.java.server.request.RequestStringBuilder;
 import main.java.server.request.RequestStringReader;
 import main.java.server.response.ResponseBuilder;
 import main.java.server.response.ResponseWriter;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class Router {
     public void handleTrafficFor(InputStream in, OutputStream out){
-        RequestBuilder requestBuilder = createRequestBuilder(in);
+        RequestStringBuilder requestBuilder = createRequestBuilder(in);
         ResponseBuilder responseBuilder = createResponseBuilder(out);
         Request request = requestBuilder.getRequest();
 
@@ -28,9 +28,9 @@ public class Router {
         }
     }
 
-    private RequestBuilder createRequestBuilder(InputStream in) {
-        RequestBuilder builder =
-                new RequestBuilder(
+    private RequestStringBuilder createRequestBuilder(InputStream in) {
+        RequestStringBuilder builder =
+                new RequestStringBuilder(
                         new RequestStringReader(
                                 new BufferedReader(
                                         new InputStreamReader(in))));

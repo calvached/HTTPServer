@@ -2,10 +2,10 @@ package main.java.server.request;
 
 import java.util.HashMap;
 
-public class RequestBuilder {
+public class RequestStringBuilder {
     private RequestStringReader reader;
 
-    public RequestBuilder(RequestStringReader requestReader) {
+    public RequestStringBuilder(RequestStringReader requestReader) {
         reader = requestReader;
     }
 
