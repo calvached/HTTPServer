@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 public class RouterTest {
     @Test
     public void itRespondsToAGetRequestWithA200() throws Exception {
-        String testString = "GET / HTTP/1.1";
+        String testString = "GET / HTTP/1.1\n" + "Content-Length: 32";
         InputStream mockInputStream =
                 new ByteArrayInputStream(
                         testString.getBytes(StandardCharsets.UTF_8));
@@ -29,7 +29,7 @@ public class RouterTest {
 
     @Test
     public void itWritesA404ResponseToTheStreamIfMethodDoesNotExist() throws Exception {
-        String testString = "GET /cats HTTP/1.1";
+        String testString = "GET /fakeRoute HTTP/1.1\n" + "Content-Length: 32";
         InputStream mockInputStream =
                 new ByteArrayInputStream(
                         testString.getBytes(StandardCharsets.UTF_8));

@@ -1,33 +1,33 @@
 package server.request;
 
 import main.java.server.request.RequestReader;
-import mocks.MockBufferedReader;
-import mocks.MockInputStream;
-
-import mocks.MockInputStreamReader;
 import org.junit.Test;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
 
 public class RequestReaderTest {
     @Test
     public void concatenatesARequestIntoAString() throws Exception {
-        String[] requestLines = {
-                "GET /localhost:5000/hi HTTP/1.0",
-                "Content-Length: 32",
-                "",
-                "{ name=diana }"};
+        String testString = "POST /form HTTP/1.1\nContent-Length: 32\n\n{ name=diana }\n";
+        InputStream mockInputStream =
+                new ByteArrayInputStream(
+                        testString.getBytes(StandardCharsets.UTF_8));
 
         RequestReader reader =
                 new RequestReader(
-                        new MockBufferedReader(
-                                new MockInputStreamReader(
-                                        new MockInputStream()),
-                                requestLines));
+                        new BufferedReader(
+                                new InputStreamReader(
+                                        mockInputStream)));
 
         String request = reader.getConcatenatedRequest();
         String expectedRequest =
-                "GET /localhost:5000/hi HTTP/1.0\n" +
+                "POST /form HTTP/1.1\n" +
                 "Content-Length: 32\n" +
                 "\n" +
                 "{ name=diana }\n";
