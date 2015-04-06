@@ -20,8 +20,18 @@ public class RequestReader {
         String request = "";
 
         try {
-            while (reader.ready()) {
-                request += reader.readLine() + "\n";
+            String line = reader.readLine();
+            request += line + "\n";
+
+            if (reader.ready()) {
+                while (reader.ready()) {
+                    int content = reader.read();
+                    request += ((char) content);
+                }
+            } else {
+                System.out.println("READER IS NOT READY!");
+                System.out.println("Client closed their socket!");
+                System.out.println("Perhaps establish a new connection?");
             }
         } catch (IOException e) {
             e.printStackTrace();
