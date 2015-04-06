@@ -11,7 +11,7 @@ public class RequestParser {
     }
 
     public String getRequestMethod() {
-        Pattern method= Pattern.compile("^(\\w+).+");
+        Pattern method = Pattern.compile("^(\\w+).+");
         Matcher methodMatcher = method.matcher(requestString);
 
         methodMatcher.find();
@@ -22,11 +22,10 @@ public class RequestParser {
     public String getPostedData() {
         String data = null;
 
-        Pattern blankLine = Pattern.compile("\\s\\s(.+)");
-        Matcher requestMatcher = blankLine.matcher(requestString);
+        String[] lines = requestString.split(blankLine());
 
-        if (requestMatcher.find()) {
-            data = requestMatcher.group(1);
+        if (lines.length > 1) {
+            data = lines[1];
         }
 
         return data;
@@ -39,5 +38,9 @@ public class RequestParser {
         urlMatcher.find();
 
         return urlMatcher.group(1);
+    }
+
+    private String blankLine() {
+        return "\\r?\\n\\r?\\n";
     }
 }
