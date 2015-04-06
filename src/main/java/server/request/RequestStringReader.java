@@ -3,10 +3,10 @@ package main.java.server.request;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class RequestReader {
+public class RequestStringReader {
     private BufferedReader reader;
 
-    public RequestReader(BufferedReader bufferedReader) {
+    public RequestStringReader(BufferedReader bufferedReader) {
         reader = bufferedReader;
     }
 

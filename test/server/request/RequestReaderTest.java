@@ -1,6 +1,6 @@
 package server.request;
 
-import main.java.server.request.RequestReader;
+import main.java.server.request.RequestStringReader;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -19,8 +19,8 @@ public class RequestReaderTest {
                 new ByteArrayInputStream(
                         testString.getBytes(StandardCharsets.UTF_8));
 
-        RequestReader reader =
-                new RequestReader(
+        RequestStringReader reader =
+                new RequestStringReader(
                         new BufferedReader(
                                 new InputStreamReader(
                                         mockInputStream)));

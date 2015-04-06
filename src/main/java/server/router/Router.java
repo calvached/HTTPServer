@@ -3,7 +3,7 @@ package main.java.server.router;
 import main.java.server.method.ConnectionHandler;
 import main.java.server.request.Request;
 import main.java.server.request.RequestBuilder;
-import main.java.server.request.RequestReader;
+import main.java.server.request.RequestStringReader;
 import main.java.server.response.ResponseBuilder;
 import main.java.server.response.ResponseWriter;
 
@@ -31,7 +31,7 @@ public class Router {
     private RequestBuilder createRequestBuilder(InputStream in) {
         RequestBuilder builder =
                 new RequestBuilder(
-                        new RequestReader(
+                        new RequestStringReader(
                                 new BufferedReader(
                                         new InputStreamReader(in))));
 

@@ -3,9 +3,9 @@ package main.java.server.request;
 import java.util.HashMap;
 
 public class RequestBuilder {
-    private RequestReader reader;
+    private RequestStringReader reader;
 
-    public RequestBuilder(RequestReader requestReader) {
+    public RequestBuilder(RequestStringReader requestReader) {
         reader = requestReader;
     }
 
