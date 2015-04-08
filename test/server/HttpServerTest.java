@@ -10,18 +10,15 @@ import static org.junit.Assert.assertEquals;
 
 public class HttpServerTest {
     @Test
-    public void itAcceptsAConnection() throws Exception {
-       // MockServerSocket serverSocket =
-       //         new MockServerSocket(3000);
-       // Router router =
-       //         new Router();
-       // HttpServer server =
-       //         new HttpServer(serverSocket, router);
+    public void itRespondsToARequest() throws Exception {
+        MockServerSocket serverSocket = new MockServerSocket(3000);
+        Router router = new Router();
 
-        // need to build mock in and mock out
+        HttpServer server = new HttpServer(serverSocket, router);
+        server.start();
 
-       // server.start();
+        String outputResponse = serverSocket.getOutputResponse();
 
-       // assertEquals(true, serverSocket.isAccepted());
+        assertEquals("HTTP/1.1 200 OK", outputResponse);
     }
 }
