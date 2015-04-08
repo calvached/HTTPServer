@@ -16,16 +16,16 @@ public class ResponseWriter {
     public void write(String string) throws IOException {
         byte[] data = string.getBytes(Charset.forName("UTF-8"));
 
-        out.flush();
         out.write(data);
-        out.flush();
     }
 
     public void write(Path path) throws IOException {
         byte[] data = Files.readAllBytes(path);
 
-        out.flush();
         out.write(data);
-        out.flush();
+    }
+
+    public void flush() throws IOException {
+       out.flush();
     }
 }

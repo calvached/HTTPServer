@@ -16,12 +16,13 @@ public class GetHandler {
     }
 
     public void handle(Request request) throws IOException {
-        Path filePath = Paths.get("public" + request.url());
+        Path filePath = Paths.get("../cob_spec/public" + request.url());
 
         if (isNotFileOrDirectory(filePath)) {
            serveResponse(request);
         } else {
-           serveContent(request);
+           String mimeType = getFileMimeTypeFromName(filePath.getFileName().toString());
+           serveContent(request, mimeType);
         }
     }
 
@@ -29,15 +30,32 @@ public class GetHandler {
         return Files.isDirectory(path) || Files.notExists(path);
     }
 
-    private void serveContent(Request request) {
-        builder.serveContent("public" + request.url());
+    private void serveContent(Request request, String mimeType) {
+        builder.serveContent("../cob_spec/public" + request.url(), mimeType);
     }
 
     private void serveResponse(Request request) {
         if (request.url().equals("/")) {
             builder.createSuccessfulResponse();
+        }
+        else if (request.url().equals("/form")) {
+            builder.serveContent("../cob_spec/public/postData.txt", "text/plain");
         } else {
             builder.createFourOhFour();
         }
+    }
+
+    private String getFileMimeTypeFromName(String fileName) {
+        String mimeType = "";
+
+        String[] lines = fileName.split("\\.");
+
+        if (lines.length > 1) {
+            mimeType += "image/" + lines[1];
+        } else {
+           mimeType += "text/plain";
+        }
+
+        return mimeType;
     }
 }
