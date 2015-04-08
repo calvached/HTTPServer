@@ -7,10 +7,11 @@ import java.net.Socket;
 public class MockServerSocket extends ServerSocket {
     private boolean boundStatus = true;
     private boolean closedStatus = false;
-    private boolean acceptStatus = false;
     private int localPort;
+    private Socket socket;
 
     public MockServerSocket(int port) throws IOException {
+        socket = new MockSocket();
         localPort = port;
     }
 
@@ -23,13 +24,7 @@ public class MockServerSocket extends ServerSocket {
     }
 
     public Socket accept() {
-        acceptStatus = true;
-
-        return null;
-    }
-
-    public boolean isAccepted() {
-       return acceptStatus;
+        return socket;
     }
 
     public void close() {
@@ -38,6 +33,10 @@ public class MockServerSocket extends ServerSocket {
 
     public boolean isClosed() {
         return closedStatus;
+    }
+
+    public String getOutputResponse() throws IOException {
+        return socket.getOutputStream().toString();
     }
 
     private void toggleClose() {

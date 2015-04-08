@@ -20,13 +20,17 @@ public class HttpServer {
     public void start() throws IOException {
         while (true){
             Socket clientSocket = getIncomingClientSocket();
-            handle(clientSocket);
-            clientSocket.close();
+
+            if (!clientSocket.isClosed()) {
+                handle(clientSocket);
+                clientSocket.close();
+            } else {
+                break;
+            }
         }
     }
 
     private Socket getIncomingClientSocket() {
-        System.out.println("LISTENING...");
         Socket incoming = null;
 
         try {
