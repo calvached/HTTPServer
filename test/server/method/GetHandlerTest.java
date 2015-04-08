@@ -9,7 +9,9 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class GetHandlerTest {
 
@@ -39,7 +41,7 @@ public class GetHandlerTest {
     public void servesAFile() throws Exception {
         HashMap attributes = new HashMap();
         attributes.put("requestMethod", "GET");
-        attributes.put("url", "/file.txt");
+        attributes.put("url", "/file1");
         attributes.put("data", null);
 
         ByteArrayOutputStream mockOutputStream =
@@ -52,11 +54,40 @@ public class GetHandlerTest {
                         new ResponseWriter(mockOutputStream));
 
         GetHandler get = new GetHandler(builder);
-        assertEquals(0, mockOutputStream.size());
-
         get.handle(request);
+        String expectedResponse =
+                "HTTP/1.1 200 OK\r\n" +
+                "Content-Type: text/plain\r\n" +
+                "\r\n" +
+                "file1 contents";
 
-        assertEquals("File Content", mockOutputStream.toString().trim());
+        assertEquals(expectedResponse, mockOutputStream.toString().trim());
+    }
+
+    @Test
+    public void servesAnImageFile() throws Exception {
+        HashMap attributes = new HashMap();
+        attributes.put("requestMethod", "GET");
+        attributes.put("url", "/image.png");
+        attributes.put("data", null);
+
+        ByteArrayOutputStream mockOutputStream =
+                new ByteArrayOutputStream();
+
+        Request request = new Request(attributes);
+
+        ResponseBuilder builder =
+                new ResponseBuilder(
+                        new ResponseWriter(mockOutputStream));
+
+        GetHandler get = new GetHandler(builder);
+        get.handle(request);
+        String expectedResponse =
+                "HTTP/1.1 200 OK\r\n" +
+                        "Content-Type: image/png\r\n" +
+                        "\r\n";
+
+        assertThat(mockOutputStream.toString().trim(), containsString(expectedResponse));
     }
 
     @Test

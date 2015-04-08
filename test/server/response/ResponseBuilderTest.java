@@ -43,9 +43,14 @@ public class ResponseBuilderTest {
         ResponseWriter writer = new ResponseWriter(mockOutputStream);
         ResponseBuilder builder = new ResponseBuilder(writer);
 
-        builder.serveContent("public/sample.pdf");
-        Integer contentSize = mockOutputStream.size();
+        builder.serveContent("public/file.txt", "text/plain");
 
-        assertEquals((Integer) 7945, contentSize);
+        String expectedResponse =
+                "HTTP/1.1 200 OK\r\n" +
+                "Content-Type: text/plain\r\n" +
+                "\r\n" +
+                "File Content";
+
+        assertEquals(expectedResponse, mockOutputStream.toString().trim());
     }
 }
