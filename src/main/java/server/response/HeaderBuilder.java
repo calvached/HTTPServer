@@ -14,7 +14,8 @@ public class HeaderBuilder {
     public void assembleHeaders() {
         if (request.containsKey("redirect")) {
             response.put("header", "Location: http://localhost:5000" + request.get("path"));
+        } else if (request.containsKey("options")) {
+            response.put("header", "Allow: " + request.get("options"));
         }
-
     }
 }

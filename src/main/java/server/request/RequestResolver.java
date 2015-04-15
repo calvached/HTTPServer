@@ -54,9 +54,29 @@ public class RequestResolver {
             request.put("path", getRedirectionPath(request));
             request.put("redirect", "true");
         }
+        else if (request.get("method").equals("OPTIONS")) {
+            allowedMethods(request);
+
+            request.put("options", allowedMethods(request));
+
+        }
         else if (methodNotAllowed(request.get("path"), request.get("method"))) {
             request.put("methodNotAllowed", "true");
         }
+    }
+
+    private String allowedMethods(HashMap<String, String> request) {
+        String allMethods = "";
+
+        String[] allowedMethods = (String[]) validRoutes.routes.get(request.get("path")).get("allowedMethods");
+
+        allMethods += allowedMethods[0] +
+                ", " + allowedMethods[1] +
+                ", " + allowedMethods[2] +
+                ", " + allowedMethods[3] +
+                ", " + allowedMethods[4];
+
+        return allMethods;
     }
 
     private boolean methodNotAllowed(String path, String method) {

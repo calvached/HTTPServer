@@ -8,6 +8,7 @@ import java.util.HashMap;
 import static org.junit.Assert.assertEquals;
 
 public class HeaderBuilderTest {
+
     @Test
     public void itAssemblesALocationHeaderForARedirect() throws Exception {
         HashMap<String, String> request = new HashMap<>();
@@ -23,5 +24,23 @@ public class HeaderBuilderTest {
         headerBuilder.assembleHeaders();
 
         assertEquals("Location: http://localhost:5000/", response.get("header"));
+    }
+
+    @Test
+    public void itAssemblesAnAllowHeaderForOptions() throws Exception {
+        HashMap<String, String> request = new HashMap<>();
+        request.put("method", "OPTIONS");
+        request.put("path", "/method_options");
+        request.put("params", "");
+        request.put("content", "public/postData.txt");
+        request.put("options", "GET, HEAD, POST, OPTIONS, PUT");
+
+
+        HashMap<String, Object> response = new HashMap<>();
+
+        HeaderBuilder headerBuilder = new HeaderBuilder(request, response);
+        headerBuilder.assembleHeaders();
+
+        assertEquals("Allow: GET, HEAD, POST, OPTIONS, PUT", response.get("header"));
     }
 }
