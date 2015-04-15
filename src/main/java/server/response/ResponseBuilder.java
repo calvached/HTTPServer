@@ -18,6 +18,9 @@ public class ResponseBuilder {
         ContentBuilder contentBuilder = new ContentBuilder(request, response);
         contentBuilder.assembleContent();
 
+        HeaderBuilder headerBuilder = new HeaderBuilder(request, response);
+        headerBuilder.assembleHeaders();
+
         ParamProcessor paramProcessor = new ParamProcessor(request);
         paramProcessor.process();
 
