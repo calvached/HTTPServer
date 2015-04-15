@@ -89,7 +89,7 @@ public class RequestResolverTest {
 
     @Test
     public void options() throws Exception {
-        String allowedMethods = "GET, HEAD, POST, OPTIONS, PUT";
+        String allowedMethods = "GET,HEAD,POST,OPTIONS,PUT";
 
         HashMap<String, String> unresolvedRequest = new HashMap<>();
         unresolvedRequest.put("method", "OPTIONS");

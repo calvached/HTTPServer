@@ -13,6 +13,7 @@ public class RequestStringBuilder {
     public HashMap getRequest() {
         RequestStringReader reader = new RequestStringReader(in);
         String requestString = reader.getConcatenatedRequest();
+
         HashMap attributes = parseAttributes(requestString);
         RequestResolver resolver = new RequestResolver();
 

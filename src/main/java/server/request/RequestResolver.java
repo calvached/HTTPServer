@@ -16,13 +16,13 @@ public class RequestResolver {
     private void determineIfPathExists(HashMap<String, String> request) {
         if (existingPathIsValid(request.get("path"))) {
             determinePathType(request);
-            determineIfContentExists(request);
+            assignContent(request);
         } else {
             request.put("notFound", "true");
         }
     }
 
-    private void determineIfContentExists(HashMap<String, String> request) {
+    private void assignContent(HashMap<String, String> request) {
         if (contentExists(request)) {
             request.put("content", getContentPath(request));
 
@@ -71,10 +71,10 @@ public class RequestResolver {
         String[] allowedMethods = (String[]) validRoutes.routes.get(request.get("path")).get("allowedMethods");
 
         allMethods += allowedMethods[0] +
-                ", " + allowedMethods[1] +
-                ", " + allowedMethods[2] +
-                ", " + allowedMethods[3] +
-                ", " + allowedMethods[4];
+                "," + allowedMethods[1] +
+                "," + allowedMethods[2] +
+                "," + allowedMethods[3] +
+                "," + allowedMethods[4];
 
         return allMethods;
     }
