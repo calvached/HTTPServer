@@ -11,7 +11,7 @@ public class DirectoryTemplate {
         String template = "";
 
         for (String line : strings) {
-            template += line + "\r\n";
+            template += "<a href='http://localhost:5000/"+ line +"'>" + line + "</a>" + "\r\n";
         }
 
         return template;

@@ -9,12 +9,25 @@ public class ValidRoutes {
     {
         routes.put("/",               indexPage());
         routes.put("/file1",          filePage());
+        routes.put("/text-file.txt",  textFilePage());
         routes.put("/form",           formPage());
         routes.put("/method_options", methodOptionsPage());
         routes.put("/redirect",       redirectTo("/"));
         routes.put("/image.jpeg",     imagePage(".jpeg"));
         routes.put("/image.png",      imagePage(".png"));
         routes.put("/image.gif",      imagePage(".gif"));
+    }
+
+    private HashMap textFilePage() {
+        String[] methods = {
+                "GET"
+        };
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("allowedMethods", methods);
+        data.put("content", "../cob_spec/public/text-file.txt");
+
+        return data;
     }
 
     private HashMap imagePage(String extension) {

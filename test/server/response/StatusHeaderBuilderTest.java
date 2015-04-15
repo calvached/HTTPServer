@@ -58,4 +58,21 @@ public class StatusHeaderBuilderTest {
 
         assertEquals("HTTP/1.1 404 Not Found", response.get("statusHeader"));
     }
+
+    @Test
+    public void itBuildsA405StatusHeader() throws Exception {
+        HashMap<String, String> request = new HashMap<>();
+        request.put("method", "POST");
+        request.put("path", "/");
+        request.put("params", "");
+        request.put("methodNotAllowed", "true");
+
+        HashMap<String, Object> response = new HashMap<>();
+
+        StatusHeaderBuilder builder = new StatusHeaderBuilder(request, response);
+
+        builder.assembleStatusHeader();
+
+        assertEquals("HTTP/1.1 405 Method Not Allowed", response.get("statusHeader"));
+    }
 }

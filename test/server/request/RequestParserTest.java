@@ -114,4 +114,19 @@ public class RequestParserTest {
 
         assertEquals("", data);
     }
+
+    @Test
+    public void returnsAUrlWithADash() throws Exception {
+        String requestString =
+                "GET /text-file.txt HTTP/1.0\n"+
+                        "From: frog@jmarshall.com\n"+
+                        "User-Agent: HTTPTool/1.0\n"+
+                        "Content-Type: application/x-www-form-urlencoded\n"+
+                        "Content-Length: 32";
+
+        RequestParser parser = new RequestParser(requestString);
+        String url = parser.getUrl();
+
+        assertEquals("/text-file.txt", url);
+    }
 }

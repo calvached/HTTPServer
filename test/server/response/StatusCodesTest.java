@@ -27,4 +27,11 @@ public class StatusCodesTest {
 
         assertEquals("404 Not Found", codes.headers.get(404));
     }
+
+    @Test
+    public void itReturnsA405HeaderLine() throws Exception {
+        StatusCodes codes = new StatusCodes();
+
+        assertEquals("405 Method Not Allowed", codes.headers.get(405));
+    }
 }

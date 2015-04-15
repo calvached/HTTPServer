@@ -18,6 +18,8 @@ public class StatusHeaderBuilder {
             assignStatusHeader(302);
         } else if (isFlaggedWith("notFound")) {
             assignStatusHeader(404);
+        } else if (isFlaggedWith("methodNotAllowed")) {
+            assignStatusHeader(405);
         }
         else {
             assignStatusHeader(200);
