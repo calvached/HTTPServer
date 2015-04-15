@@ -32,12 +32,9 @@ public class RequestParser {
     }
 
     public String getUrl() {
-        Pattern url = Pattern.compile("^\\w+\\s(/\\w*\\.?\\w*).+");
-        Matcher urlMatcher = url.matcher(requestString);
+        String[] lines = requestString.split(" ");
 
-        urlMatcher.find();
-
-        return urlMatcher.group(1);
+        return lines[1];
     }
 
     private String blankLine() {
