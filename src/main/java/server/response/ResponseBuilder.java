@@ -1,55 +1,26 @@
 package main.java.server.response;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Map;
+import java.util.HashMap;
 
 public class ResponseBuilder {
-    private ResponseWriter writer;
-    private static final Map<Integer, String> statusCodeHeaders;
+    private final HashMap request;
+    private final HashMap<String, Object> response = new HashMap<>();
 
-    static {
-        statusCodeHeaders = new StatusCodes().headerLines;
+    public ResponseBuilder(HashMap clientRequest) {
+        request = clientRequest;
     }
 
-    public ResponseBuilder(ResponseWriter responseWriter) {
-        writer = responseWriter;
-    }
+    public HashMap getResponse() throws IOException {
+        StatusHeaderBuilder statusBuilder = new StatusHeaderBuilder(request, response);
+        statusBuilder.assembleStatusHeader();
 
-    public void createSuccessfulResponse() {
-        try {
-            writer.flush();
-            writer.write(statusCodeHeaders.get(200));
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+        ContentBuilder contentBuilder = new ContentBuilder(request, response);
+        contentBuilder.assembleContent();
 
-    public void createFourOhFour() {
-        try {
-            writer.flush();
-            writer.write(statusCodeHeaders.get(404));
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ParamProcessor paramProcessor = new ParamProcessor(request);
+        paramProcessor.process();
 
-    }
-
-    public void serveContent(String path, String contentType) {
-        Path filePath = Paths.get(path);
-
-        try {
-            writer.flush();
-            writer.write(statusCodeHeaders.get(200) + "\r\n");
-            writer.write("Content-Type: " + contentType + "\r\n");
-            writer.write("\r\n");
-            writer.write(filePath);
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return response;
     }
 }

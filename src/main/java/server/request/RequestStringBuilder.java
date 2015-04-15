@@ -1,24 +1,22 @@
 package main.java.server.request;
 
+import java.io.InputStream;
 import java.util.HashMap;
 
 public class RequestStringBuilder {
-    private RequestStringReader reader;
+    private InputStream in;
 
-    public RequestStringBuilder(RequestStringReader requestReader) {
-        reader = requestReader;
+    public RequestStringBuilder(InputStream inputStream) {
+        in = inputStream;
     }
 
-    public Request getRequest() {
+    public HashMap getRequest() {
+        RequestStringReader reader = new RequestStringReader(in);
         String requestString = reader.getConcatenatedRequest();
         HashMap attributes = parseAttributes(requestString);
-        Request request = createRequest(attributes);
+        RequestResolver resolver = new RequestResolver();
 
-        return request;
-    }
-
-    private Request createRequest(HashMap attributes) {
-        Request request = new Request(attributes);
+        HashMap request = resolver.resolve(attributes);
 
         return request;
     }
@@ -27,9 +25,9 @@ public class RequestStringBuilder {
         HashMap<String, String> attributes = new HashMap<String, String>();
         RequestParser parser = new RequestParser(requestString);
 
-        attributes.put("requestMethod", parser.getRequestMethod());
-        attributes.put("url", parser.getUrl());
-        attributes.put("data", parser.getPostedData());
+        attributes.put("method", parser.getRequestMethod());
+        attributes.put("path", parser.getUrl());
+        attributes.put("params", parser.getPostedData());
 
         return attributes;
     }

@@ -101,7 +101,7 @@ public class RequestParserTest {
     }
 
     @Test
-    public void returnsNullIfDataDoesNotExist() throws Exception {
+    public void returnsAnEmptyStringIfDataDoesNotExist() throws Exception {
         String requestString =
                 "GET /form HTTP/1.0\n"+
                 "From: frog@jmarshall.com\n"+
@@ -112,6 +112,6 @@ public class RequestParserTest {
         RequestParser parser = new RequestParser(requestString);
         String data = parser.getPostedData();
 
-        assertEquals(null, data);
+        assertEquals("", data);
     }
 }

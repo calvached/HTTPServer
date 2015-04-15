@@ -1,17 +1,14 @@
 package main.java.server.response;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class StatusCodes {
-    public static final Map<Integer, String> headerLines;
+    public final Map<Integer, String> headers = new HashMap<>();
 
-    static {
-        Map<Integer, String> httpCodes = new HashMap<>();
-        httpCodes.put(200, "HTTP/1.1 200 OK");
-        httpCodes.put(404, "HTTP/1.1 404 Not Found");
-
-        headerLines = Collections.unmodifiableMap(httpCodes);
+    {
+        headers.put(200, "200 OK");
+        headers.put(302, "302 Found");
+        headers.put(404, "404 Not Found");
     }
 }

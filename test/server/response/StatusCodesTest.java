@@ -11,13 +11,20 @@ public class StatusCodesTest {
     public void itReturnsA200HeaderLine() throws Exception {
         StatusCodes codes = new StatusCodes();
 
-        assertEquals("HTTP/1.1 200 OK", codes.headerLines.get(200));
+        assertEquals("200 OK", codes.headers.get(200));
+    }
+
+    @Test
+    public void itReturnsA302HeaderLine() throws Exception {
+        StatusCodes codes = new StatusCodes();
+
+        assertEquals("302 Found", codes.headers.get(302));
     }
 
     @Test
     public void itReturnsA404HeaderLine() throws Exception {
         StatusCodes codes = new StatusCodes();
 
-        assertEquals("HTTP/1.1 404 Not Found", codes.headerLines.get(404));
+        assertEquals("404 Not Found", codes.headers.get(404));
     }
 }
