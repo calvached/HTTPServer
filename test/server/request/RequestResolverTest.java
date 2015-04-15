@@ -86,4 +86,20 @@ public class RequestResolverTest {
 
         assertEquals(true, resolvedRequest.containsKey("isFile"));
     }
+
+    @Test
+    public void options() throws Exception {
+        String allowedMethods = "GET, HEAD, POST, OPTIONS, PUT";
+
+        HashMap<String, String> unresolvedRequest = new HashMap<>();
+        unresolvedRequest.put("method", "OPTIONS");
+        unresolvedRequest.put("path", "/method_options");
+        unresolvedRequest.put("params", "");
+
+        RequestResolver resolver = new RequestResolver();
+        HashMap resolvedRequest = resolver.resolve(unresolvedRequest);
+
+        assertEquals(true, resolvedRequest.containsKey("options"));
+        assertEquals(allowedMethods, resolvedRequest.get("options"));
+    }
 }
