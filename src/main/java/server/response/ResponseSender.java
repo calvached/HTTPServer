@@ -19,6 +19,12 @@ public class ResponseSender {
         out.flush();
         out.write(statusHeader);
         out.write(blankLine);
+
+        if (response.containsKey("header")) {
+            byte[] header = convertToByteArray((String) response.get("header"));
+            out.write(header);
+        }
+
         out.write(blankLine);
 
         if (response.containsKey("body")) {
