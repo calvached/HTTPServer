@@ -47,7 +47,7 @@ public class HttpServer {
             InputStream in = clientSocket.getInputStream();
             OutputStream out = clientSocket.getOutputStream();
 
-            router.handleTrafficFor(in, out);
+            router.directTrafficFor(in, out);
         } catch (IOException e) {
             e.printStackTrace();
         }

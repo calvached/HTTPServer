@@ -20,12 +20,12 @@ public class RequestParser {
     }
 
     public String getPostedData() {
-        String data = null;
+        String data = "";
 
         String[] lines = requestString.split(blankLine());
 
         if (lines.length > 1) {
-            data = lines[1];
+            data += lines[1];
         }
 
         return data;

@@ -1,48 +1,22 @@
 package main.java.server.router;
 
-import main.java.server.method.ConnectionHandler;
-import main.java.server.request.Request;
 import main.java.server.request.RequestStringBuilder;
-import main.java.server.request.RequestStringReader;
 import main.java.server.response.ResponseBuilder;
-import main.java.server.response.ResponseWriter;
+import main.java.server.response.ResponseSender;
 
 import java.io.*;
-import java.util.Map;
+import java.util.HashMap;
 
 public class Router {
-    public void handleTrafficFor(InputStream in, OutputStream out){
-        RequestStringBuilder requestBuilder = createRequestBuilder(in);
-        ResponseBuilder responseBuilder = createResponseBuilder(out);
-        Request request = requestBuilder.getRequest();
+    public void directTrafficFor(InputStream in, OutputStream out) throws IOException {
+        RequestStringBuilder requestBuilder = new RequestStringBuilder(in);
 
-        ConnectionHandler connectionHandler =
-                new ConnectionHandler(request, responseBuilder);
+        HashMap request = requestBuilder.getRequest();
 
-        Map<String, Runnable> httpMethods = connectionHandler.methods;
+        ResponseBuilder responseBuilder = new ResponseBuilder(request);
+        HashMap response = responseBuilder.getResponse();
 
-        if (httpMethods.get(request.method()) == null) {
-            responseBuilder.createFourOhFour();
-        } else {
-            httpMethods.get(request.method()).run();
-        }
-    }
-
-    private RequestStringBuilder createRequestBuilder(InputStream in) {
-        RequestStringBuilder builder =
-                new RequestStringBuilder(
-                        new RequestStringReader(
-                                new BufferedReader(
-                                        new InputStreamReader(in))));
-
-        return builder;
-    }
-
-    private ResponseBuilder createResponseBuilder(OutputStream out) {
-        ResponseBuilder builder =
-                new ResponseBuilder(
-                        new ResponseWriter(out));
-
-        return builder;
+        ResponseSender sender = new ResponseSender(out);
+        sender.send(response);
     }
 }

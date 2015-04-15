@@ -3,10 +3,8 @@ package server.request;
 import main.java.server.request.RequestStringReader;
 import org.junit.Test;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
@@ -21,9 +19,7 @@ public class RequestStringReaderTest {
 
         RequestStringReader reader =
                 new RequestStringReader(
-                        new BufferedReader(
-                                new InputStreamReader(
-                                        mockInputStream)));
+                        mockInputStream);
 
         String request = reader.getConcatenatedRequest();
         String expectedRequest =

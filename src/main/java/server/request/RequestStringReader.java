@@ -2,12 +2,17 @@ package main.java.server.request;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class RequestStringReader {
     private BufferedReader reader;
 
-    public RequestStringReader(BufferedReader bufferedReader) {
-        reader = bufferedReader;
+    public RequestStringReader(InputStream inputStream) {
+        reader =
+                new BufferedReader(
+                        new InputStreamReader(
+                                inputStream));
     }
 
     public String getConcatenatedRequest() {
