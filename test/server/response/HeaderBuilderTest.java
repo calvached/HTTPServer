@@ -23,7 +23,7 @@ public class HeaderBuilderTest {
         HeaderBuilder headerBuilder = new HeaderBuilder(request, response);
         headerBuilder.assembleHeaders();
 
-        assertEquals("Location: http://localhost:5000/", response.get("header"));
+        assertEquals("Location: http://localhost:5000/\r\n", response.get("header"));
     }
 
     @Test
@@ -41,6 +41,6 @@ public class HeaderBuilderTest {
         HeaderBuilder headerBuilder = new HeaderBuilder(request, response);
         headerBuilder.assembleHeaders();
 
-        assertEquals("Allow: GET, HEAD, POST, OPTIONS, PUT", response.get("header"));
+        assertEquals("Allow: GET, HEAD, POST, OPTIONS, PUT\r\n", response.get("header"));
     }
 }
