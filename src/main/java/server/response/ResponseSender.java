@@ -3,7 +3,6 @@ package main.java.server.response;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import java.util.HashMap;
 
 public class ResponseSender {
     private final OutputStream out;
@@ -12,24 +11,20 @@ public class ResponseSender {
         out = outputStream;
     }
 
-    public void send(HashMap<String, Object> response) throws IOException {
-        byte[] statusHeader = convertToByteArray((String) response.get("statusHeader"));
+    public void send(Response response) throws IOException {
+        byte[] statusHeader = convertToByteArray(response.statusHeader());
         byte[] blankLine = convertToByteArray("\r\n");
+        byte[] headers = convertToByteArray(response.headers());
 
         out.flush();
         out.write(statusHeader);
+        out.write(headers);
         out.write(blankLine);
 
-        if (response.containsKey("header")) {
-            byte[] header = convertToByteArray((String) response.get("header"));
-            out.write(header);
+        if (response.body() != null) {
+            out.write(response.body());
         }
 
-        out.write(blankLine);
-
-        if (response.containsKey("body")) {
-            out.write((byte[]) response.get("body"));
-        }
         out.flush();
     }
 

@@ -1,9 +1,14 @@
 package server.response;
 
 import main.java.server.response.ContentBuilder;
+import main.java.server.response.Response;
+import main.java.server.routeData.RouteData;
 import org.junit.Test;
 
-import java.util.HashMap;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,71 +16,63 @@ public class ContentBuilderTest {
 
     @Test
     public void itFindsContentForAGetRequest() throws Exception {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("method", "GET");
-        request.put("path", "/");
-        request.put("params", "");
-        request.put("content", "public/file.txt");
-        request.put("isFile", "true");
+        Path filePath = Paths.get("public/file.txt");
+        String textToString = new String(Files.readAllBytes(filePath));
 
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("statusHeader", "HTTP/1.1 200 OK");
+        RouteData routeData = new RouteData();
+        routeData.setIsFile(true);
+        routeData.setContentPath("public/file.txt");
 
-        ContentBuilder contentBuilder = new ContentBuilder(request, response);
+        Response response = new Response();
+
+        ContentBuilder contentBuilder = new ContentBuilder("GET", routeData, response);
         contentBuilder.assembleContent();
 
-        assertEquals(true, response.containsKey("body"));
+        String bodyToString = new String(response.body());
+
+        assertEquals(textToString, bodyToString);
     }
 
     @Test
     public void itFindsContentForADirectory() throws Exception {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("method", "GET");
-        request.put("path", "/");
-        request.put("params", "");
-        request.put("content", "public/");
-        request.put("isDirectory", "true");
+        File directoryFile = new File("public/");
 
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("statusHeader", "HTTP/1.1 200 OK");
+        RouteData routeData = new RouteData();
+        routeData.setIsDirectory(true);
+        routeData.setContentPath("public/");
 
-        ContentBuilder contentBuilder = new ContentBuilder(request, response);
+        Response response = new Response();
+
+        ContentBuilder contentBuilder = new ContentBuilder("GET", routeData, response);
         contentBuilder.assembleContent();
 
-        assertEquals(true, response.containsKey("body"));
+        String bodyToString = new String(response.body());
+
+        assertEquals(true, bodyToString.contains(directoryFile.list()[0]));
     }
 
     @Test
     public void itDoesNotAssignContentIfNotAGetRequest() throws Exception {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("method", "POST");
-        request.put("path", "/");
-        request.put("params", "");
-        request.put("content", "public/file.txt");
+        RouteData routeData = new RouteData();
 
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("statusHeader", "HTTP/1.1 200 OK");
+        Response response = new Response();
 
-        ContentBuilder contentBuilder = new ContentBuilder(request, response);
+        ContentBuilder contentBuilder = new ContentBuilder("POST", routeData, response);
         contentBuilder.assembleContent();
 
-        assertEquals(false, response.containsKey("body"));
+        assertEquals(null, response.body());
     }
 
     @Test
     public void itDoesNotGetContentIf404() throws Exception {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("method", "POST");
-        request.put("path", "/noRoute");
-        request.put("params", "");
-        request.put("content", "public/file.txt");
-        request.put("notFound", "true");
+        RouteData routeData = new RouteData();
+        routeData.setNotFound(true);
 
-        HashMap<String, Object> response = new HashMap<>();
+        Response response = new Response();
 
-        ContentBuilder contentBuilder = new ContentBuilder(request, response);
+        ContentBuilder contentBuilder = new ContentBuilder("POST", routeData, response);
         contentBuilder.assembleContent();
 
-        assertEquals(false, response.containsKey("body"));
+        assertEquals(null, response.body());
     }
 }

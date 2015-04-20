@@ -1,19 +1,22 @@
 package main.java.server.response;
 
+import main.java.server.routeData.RouteData;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 
 public class ContentBuilder {
-    private final HashMap<String, String> request;
-    private final HashMap<String, Object> response;
+    private final String requestMethod;
+    private final RouteData routeData;
+    private final Response response;
 
-    public ContentBuilder(HashMap<String, String> clientRequest, HashMap<String, Object> serverResponse) {
-        request = clientRequest;
+    public ContentBuilder(String method, RouteData clientRouteData, Response serverResponse) {
+        requestMethod = method;
+        routeData = clientRouteData;
         response = serverResponse;
     }
 
@@ -24,7 +27,7 @@ public class ContentBuilder {
     }
 
     private void getContent() throws IOException {
-        if (request.containsKey("isDirectory")) {
+        if (routeData.isDirectory()) {
             String template = createTemplate(new File(path()));
             assignTemplateToResponse(template);
 
@@ -44,7 +47,7 @@ public class ContentBuilder {
     private void assignTemplateToResponse(String template) {
         byte[] templateBytes = convertToBytes(template);
 
-        response.put("body", templateBytes);
+        response.setBody(templateBytes);
     }
 
     private byte[] convertToBytes(String template) {
@@ -58,18 +61,18 @@ public class ContentBuilder {
     private void assignFilePathToResponse() throws IOException {
         Path filePath = Paths.get(path());
 
-        response.put("body", convertToBytes(filePath));
+        response.setBody(convertToBytes(filePath));
     }
 
     private String path() {
-        return request.get("content");
+        return routeData.contentPath();
     }
 
     private boolean isGET() {
-        return request.get("method").equals("GET");
+        return requestMethod.equals("GET");
     }
 
     private boolean not404() {
-        return !request.containsKey("notFound");
+        return !routeData.notFound();
     }
 }

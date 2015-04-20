@@ -1,12 +1,12 @@
 package server.request;
 
+import main.java.server.request.Request;
 import main.java.server.request.RequestStringBuilder;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,10 +21,10 @@ public class RequestStringBuilderTest {
 
         RequestStringBuilder builder = new RequestStringBuilder(mockInputStream);
 
-        HashMap request = builder.getRequest();
+        Request request = builder.getRequest();
 
-        assertEquals("POST", request.get("method"));
-        assertEquals("/form", request.get("path"));
-        assertEquals("{ name=diana }\n", request.get("params"));
+        assertEquals("POST", request.method());
+        assertEquals("/form", request.path());
+        assertEquals("{ name=diana }\n", request.params());
     }
 }

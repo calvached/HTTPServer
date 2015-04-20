@@ -1,17 +1,21 @@
 package main.java.server.response;
 
+import main.java.server.request.Request;
+import main.java.server.routeData.RouteData;
+
 import java.io.*;
-import java.util.HashMap;
 
 public class ParamProcessor {
-    private final HashMap<String, String> request;
+    private final Request request;
+    private final RouteData routeData;
 
-    public ParamProcessor(HashMap<String, String> clientRequest) {
+    public ParamProcessor(Request clientRequest, RouteData clientRouteData) {
         request = clientRequest;
+        routeData = clientRouteData;
     }
 
     public void process() {
-        if (!request.containsKey("notFound") && !request.containsKey("methodNotAllowed")) {
+        if (!routeData.notFound() && !routeData.methodNotAllowed()) {
             if (methodIs("POST")) {
                 add();
             }
@@ -25,9 +29,9 @@ public class ParamProcessor {
     }
 
     private void delete() {
-        File file = new File(request.get("content"));
+        File file = new File(routeData.contentPath());
 
-        FileWriter writer = null;
+        FileWriter writer;
         try {
             writer = new FileWriter(file, false);
             writer.write(" ");
@@ -38,13 +42,12 @@ public class ParamProcessor {
     }
 
     private void update() {
-        File file = new File(request.get("content"));
+        File file = new File(routeData.contentPath());
 
-        FileWriter writer = null;
-
+        FileWriter writer;
         try {
             writer = new FileWriter(file, false);
-            writer.write(request.get("params"));
+            writer.write(request.params());
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,11 +55,10 @@ public class ParamProcessor {
     }
 
     private void add() {
-        PrintWriter writer = null;
-
+        PrintWriter writer;
         try {
-            writer = new PrintWriter(request.get("content"), "UTF-8");
-            writer.println(request.get("params"));
+            writer = new PrintWriter(routeData.contentPath(), "UTF-8");
+            writer.println(request.params());
             writer.close();
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -64,6 +66,6 @@ public class ParamProcessor {
     }
 
     private boolean methodIs(String method) {
-        return request.get("method").equals(method);
+        return request.method().equals(method);
     }
 }

@@ -1,4 +1,4 @@
-package main.java.server.request;
+package main.java.server.routeData;
 
 import java.util.HashMap;
 import java.util.Map;
