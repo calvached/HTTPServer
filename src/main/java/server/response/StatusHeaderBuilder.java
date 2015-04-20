@@ -1,24 +1,25 @@
 package main.java.server.response;
 
-import java.util.HashMap;
+import main.java.server.routeData.RouteData;
 
 public class StatusHeaderBuilder {
     private final String httpVersion = "HTTP/1.1 ";
+    private final String CRLF = "\r\n";
     private final StatusCodes statusCodes = new StatusCodes();
-    private final HashMap<String, String> request;
-    private final HashMap<String, Object> response;
+    private final RouteData routeData;
+    private final Response response;
 
-    public StatusHeaderBuilder(HashMap<String, String> clientRequest, HashMap<String, Object> serverResponse) {
-        request = clientRequest;
+    public StatusHeaderBuilder(RouteData clientRouteData, Response serverResponse) {
+        routeData = clientRouteData;
         response = serverResponse;
     }
 
     public void assembleStatusHeader() {
-        if (isFlaggedWith("redirect")) {
+        if (routeData.isRedirect()) {
             assignStatusHeader(302);
-        } else if (isFlaggedWith("notFound")) {
+        } else if (routeData.notFound()) {
             assignStatusHeader(404);
-        } else if (isFlaggedWith("methodNotAllowed")) {
+        } else if (routeData.methodNotAllowed()) {
             assignStatusHeader(405);
         }
         else {
@@ -26,15 +27,11 @@ public class StatusHeaderBuilder {
         }
     }
 
-    private boolean isFlaggedWith(String flagMessage) {
-        return request.containsKey(flagMessage);
-    }
-
     private void assignStatusHeader(int statusCode) {
-        response.put("statusHeader", getStatusHeaderLine(statusCode));
+        response.setStatusHeader(getStatusHeaderLine(statusCode));
     }
 
     private String getStatusHeaderLine(int statusCode) {
-        return httpVersion + statusCodes.headers.get(statusCode);
+        return httpVersion + statusCodes.headers.get(statusCode) + CRLF;
     }
 }

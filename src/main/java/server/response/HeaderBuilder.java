@@ -1,21 +1,25 @@
 package main.java.server.response;
 
-import java.util.HashMap;
+import main.java.server.routeData.RouteData;
 
 public class HeaderBuilder {
-    private final HashMap<String, String> request;
-    private final HashMap<String, Object> response;
+    private final RouteData routeData;
+    private final Response response;
 
-    public HeaderBuilder(HashMap<String, String> clientRequest, HashMap<String, Object> serverResponse) {
-        request = clientRequest;
+    public HeaderBuilder(RouteData clientRouteData, Response serverResponse) {
+        routeData = clientRouteData;
         response = serverResponse;
     }
 
     public void assembleHeaders() {
-        if (request.containsKey("redirect")) {
-            response.put("header", "Location: http://localhost:5000" + request.get("path") + "\r\n");
-        } else if (request.containsKey("options")) {
-            response.put("header", "Allow: " + request.get("options") + "\r\n");
+        if (routeData.isRedirect()) {
+            response.setHeader("Location: http://localhost:5000" +
+                               routeData.redirectPath() +
+                               "\r\n");
+        } else if (routeData.isOptions()) {
+            response.setHeader("Allow: " +
+                               routeData.allowedMethods() +
+                               "\r\n");
         }
     }
 }

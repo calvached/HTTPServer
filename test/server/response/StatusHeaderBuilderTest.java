@@ -1,9 +1,9 @@
 package server.response;
 
+import main.java.server.response.Response;
 import main.java.server.response.StatusHeaderBuilder;
+import main.java.server.routeData.RouteData;
 import org.junit.Test;
-
-import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,68 +11,56 @@ public class StatusHeaderBuilderTest {
 
     @Test
     public void itBuildsA200StatusHeader() throws Exception {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("method", "GET");
-        request.put("path", "/");
-        request.put("params", "");
+        RouteData routeData = new RouteData();
 
-        HashMap<String, Object> response = new HashMap<>();
+        Response response = new Response();
 
-        StatusHeaderBuilder builder = new StatusHeaderBuilder(request, response);
+        StatusHeaderBuilder builder = new StatusHeaderBuilder(routeData, response);
 
         builder.assembleStatusHeader();
 
-        assertEquals("HTTP/1.1 200 OK", response.get("statusHeader"));
+        assertEquals("HTTP/1.1 200 OK\r\n", response.statusHeader());
     }
 
     @Test
     public void itBuildsA302StatusHeader() throws Exception {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("method", "GET");
-        request.put("path", "/person");
-        request.put("params", "");
-        request.put("redirect", "true");
+        RouteData routeData = new RouteData();
+        routeData.setIsRedirect(true);
 
-        HashMap<String, Object> response = new HashMap<>();
+        Response response = new Response();
 
-        StatusHeaderBuilder builder = new StatusHeaderBuilder(request, response);
+        StatusHeaderBuilder builder = new StatusHeaderBuilder(routeData, response);
 
         builder.assembleStatusHeader();
 
-        assertEquals("HTTP/1.1 302 Found", response.get("statusHeader"));
+        assertEquals("HTTP/1.1 302 Found\r\n", response.statusHeader());
     }
 
     @Test
     public void itBuildsA404StatusHeader() throws Exception {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("method", "GET");
-        request.put("path", "/noRoute");
-        request.put("params", "");
-        request.put("notFound", "true");
+        RouteData routeData = new RouteData();
+        routeData.setNotFound(true);
 
-        HashMap<String, Object> response = new HashMap<>();
+        Response response = new Response();
 
-        StatusHeaderBuilder builder = new StatusHeaderBuilder(request, response);
+        StatusHeaderBuilder builder = new StatusHeaderBuilder(routeData, response);
 
         builder.assembleStatusHeader();
 
-        assertEquals("HTTP/1.1 404 Not Found", response.get("statusHeader"));
+        assertEquals("HTTP/1.1 404 Not Found\r\n", response.statusHeader());
     }
 
     @Test
     public void itBuildsA405StatusHeader() throws Exception {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("method", "POST");
-        request.put("path", "/");
-        request.put("params", "");
-        request.put("methodNotAllowed", "true");
+        RouteData routeData = new RouteData();
+        routeData.setMethodNotAllowed(true);
 
-        HashMap<String, Object> response = new HashMap<>();
+        Response response = new Response();
 
-        StatusHeaderBuilder builder = new StatusHeaderBuilder(request, response);
+        StatusHeaderBuilder builder = new StatusHeaderBuilder(routeData, response);
 
         builder.assembleStatusHeader();
 
-        assertEquals("HTTP/1.1 405 Method Not Allowed", response.get("statusHeader"));
+        assertEquals("HTTP/1.1 405 Method Not Allowed\r\n", response.statusHeader());
     }
 }

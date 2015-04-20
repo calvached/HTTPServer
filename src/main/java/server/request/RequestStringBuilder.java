@@ -10,20 +10,12 @@ public class RequestStringBuilder {
         in = inputStream;
     }
 
-    public HashMap getRequest() {
-        RequestStringReader reader = new RequestStringReader(in);
-        String requestString = reader.getConcatenatedRequest();
-
-        HashMap attributes = parseAttributes(requestString);
-        RequestResolver resolver = new RequestResolver();
-
-        HashMap request = resolver.resolve(attributes);
-
-        return request;
+    public Request getRequest() {
+       return new Request(getAttributes(requestString()));
     }
 
-    private HashMap parseAttributes(String requestString) {
-        HashMap<String, String> attributes = new HashMap<String, String>();
+    private HashMap getAttributes(String requestString) {
+        HashMap<String, String> attributes = new HashMap<>();
         RequestParser parser = new RequestParser(requestString);
 
         attributes.put("method", parser.getRequestMethod());
@@ -31,5 +23,13 @@ public class RequestStringBuilder {
         attributes.put("params", parser.getPostedData());
 
         return attributes;
+    }
+
+    private String requestString() {
+        return reader().getConcatenatedRequest();
+    }
+
+    private RequestStringReader reader() {
+        return new RequestStringReader(in);
     }
 }

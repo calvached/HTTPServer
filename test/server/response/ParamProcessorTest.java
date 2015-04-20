@@ -1,6 +1,8 @@
 package server.response;
 
+import main.java.server.request.Request;
 import main.java.server.response.ParamProcessor;
+import main.java.server.routeData.RouteData;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -12,13 +14,16 @@ import static org.junit.Assert.assertEquals;
 public class ParamProcessorTest {
     @Test
     public void itPostsData() throws Exception {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("method", "POST");
-        request.put("path", "/form");
-        request.put("params", "param data here");
-        request.put("content", "public/postData.txt");
+        HashMap<String, String> attributes = new HashMap<>();
+        attributes.put("method", "POST");
+        attributes.put("path", "/form");
+        attributes.put("params", "param data here");
+        Request request = new Request(attributes);
 
-        ParamProcessor processor = new ParamProcessor(request);
+        RouteData routeData = new RouteData();
+        routeData.setContentPath("public/postData.txt");
+
+        ParamProcessor processor = new ParamProcessor(request, routeData);
         processor.process();
 
         FileReader inputFile = new FileReader("public/postData.txt");
@@ -31,13 +36,16 @@ public class ParamProcessorTest {
 
     @Test
     public void itUpdatesData() throws Exception {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("method", "PUT");
-        request.put("path", "/form");
-        request.put("params", "different data here");
-        request.put("content", "public/postData.txt");
+        HashMap<String, String> attributes = new HashMap<>();
+        attributes.put("method", "PUT");
+        attributes.put("path", "/form");
+        attributes.put("params", "different data here");
+        Request request = new Request(attributes);
 
-        ParamProcessor processor = new ParamProcessor(request);
+        RouteData routeData = new RouteData();
+        routeData.setContentPath("public/postData.txt");
+
+        ParamProcessor processor = new ParamProcessor(request, routeData);
         processor.process();
 
         FileReader inputFile = new FileReader("public/postData.txt");
@@ -50,13 +58,17 @@ public class ParamProcessorTest {
 
     @Test
     public void itDeletesData() throws Exception {
-        HashMap<String, String> request = new HashMap<>();
-        request.put("method", "DELETE");
-        request.put("path", "/form");
-        request.put("params", "");
-        request.put("content", "public/postData.txt");
+        HashMap<String, String> attributes = new HashMap<>();
+        attributes.put("method", "DELETE");
+        attributes.put("path", "/form");
+        attributes.put("params", "");
+        attributes.put("content", "public/postData.txt");
+        Request request = new Request(attributes);
 
-        ParamProcessor processor = new ParamProcessor(request);
+        RouteData routeData = new RouteData();
+        routeData.setContentPath("public/postData.txt");
+
+        ParamProcessor processor = new ParamProcessor(request, routeData);
         processor.process();
 
         FileReader inputFile = new FileReader("public/postData.txt");

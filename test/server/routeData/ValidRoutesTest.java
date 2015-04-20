@@ -1,6 +1,6 @@
-package server.request;
+package server.routeData;
 
-import main.java.server.request.ValidRoutes;
+import main.java.server.routeData.ValidRoutes;
 import org.junit.Test;
 
 import java.util.Arrays;
