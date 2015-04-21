@@ -23,6 +23,20 @@ public class StatusHeaderBuilderTest {
     }
 
     @Test
+    public void itBuildsA204StatusHeader() throws Exception {
+        RouteData routeData = new RouteData();
+        routeData.setIsPatch(true);
+
+        Response response = new Response();
+
+        StatusHeaderBuilder builder = new StatusHeaderBuilder(routeData, response);
+
+        builder.assembleStatusHeader();
+
+        assertEquals("HTTP/1.1 204 No Content\r\n", response.statusHeader());
+    }
+
+    @Test
     public void itBuildsA302StatusHeader() throws Exception {
         RouteData routeData = new RouteData();
         routeData.setIsRedirect(true);

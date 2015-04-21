@@ -7,6 +7,7 @@ public class RouteData {
     private boolean isFile = false;
     private boolean isRedirect = false;
     private boolean isOptions = false;
+    private boolean isPatch = false;
     private String redirectPath = "";
     private String contentPath = "";
     private String allowedMethods = "";
@@ -57,6 +58,14 @@ public class RouteData {
 
     public void setIsOptions(boolean flag) {
         isOptions = flag;
+    }
+
+    public boolean isPatch() {
+        return isPatch;
+    }
+
+    public void setIsPatch(boolean flag) {
+        isPatch = flag;
     }
 
     public String redirectPath() {

@@ -8,18 +8,31 @@ public class ValidRoutes {
 
     {
         routes.put("/",                    indexPage());
+        routes.put("/form",                formPage());
+        routes.put("/patch-content.txt",   patchEtagPage("patch-content.txt"));
+        routes.put("/method_options",      methodOptionsPage());
+        routes.put("/redirect",            redirectTo("/"));
+        routes.put("/postData.txt",        loadFile("postData.txt"));
+        routes.put("/partial_content.txt", loadFile("partial_content.txt"));
+        routes.put("/image.jpeg",          loadFile("image.jpeg"));
+        routes.put("/image.png",           loadFile("image.png"));
+        routes.put("/image.gif",           loadFile("image.gif"));
         routes.put("/file1",               loadFile("file1"));
         routes.put("/file2",               loadFile("file1"));
         routes.put("/text-file.txt",       loadFile("text-file.txt"));
-        routes.put("/form",                formPage());
-        routes.put("/partial_content.txt", loadFile("partial_content.txt"));
-        routes.put("/patch-content.txt",   loadFile("patch-content.txt"));
-        routes.put("/postData.txt",        loadFile("postData.txt"));
-        routes.put("/method_options",      methodOptionsPage());
-        routes.put("/redirect",            redirectTo("/"));
-        routes.put("/image.jpeg",          imagePage(".jpeg"));
-        routes.put("/image.png",           imagePage(".png"));
-        routes.put("/image.gif",           imagePage(".gif"));
+    }
+
+    private HashMap patchEtagPage(String file) {
+        String[] methods = {
+                "GET",
+                "PATCH"
+        };
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("allowedMethods", methods);
+        data.put("content", "../cob_spec/public/" + file);
+
+        return data;
     }
 
     private HashMap loadFile(String file) {
@@ -30,18 +43,6 @@ public class ValidRoutes {
         HashMap<String, Object> data = new HashMap<>();
         data.put("allowedMethods", methods);
         data.put("content", "../cob_spec/public/" +file);
-
-        return data;
-    }
-
-    private HashMap imagePage(String extension) {
-        String[] methods = {
-                "GET"
-        };
-
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("allowedMethods", methods);
-        data.put("content", "../cob_spec/public/image" + extension);
 
         return data;
     }

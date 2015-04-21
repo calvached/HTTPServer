@@ -19,7 +19,7 @@ public class ParamProcessor {
             if (methodIs("POST")) {
                 add();
             }
-            else if (methodIs("PUT")) {
+            else if (methodIs("PUT") || methodIs("PATCH")) {
                 update();
             }
             else if (methodIs("DELETE")) {

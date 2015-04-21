@@ -78,4 +78,26 @@ public class ParamProcessorTest {
 
         assertEquals(" ", line);
     }
+
+    @Test
+    public void itUpdatesDataIfPatch() throws Exception {
+        HashMap<String, String> attributes = new HashMap<>();
+        attributes.put("method", "PATCH");
+        attributes.put("path", "/form");
+        attributes.put("params", "different data here");
+        Request request = new Request(attributes);
+
+        RouteData routeData = new RouteData();
+        routeData.setContentPath("public/postData.txt");
+
+        ParamProcessor processor = new ParamProcessor(request, routeData);
+        processor.process();
+
+        FileReader inputFile = new FileReader("public/postData.txt");
+        BufferedReader reader = new BufferedReader(inputFile);
+
+        String line = reader.readLine();
+
+        assertEquals("different data here", line);
+    }
 }

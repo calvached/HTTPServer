@@ -15,6 +15,13 @@ public class StatusCodesTest {
     }
 
     @Test
+    public void itReturnsA204HeaderLine() throws Exception {
+        StatusCodes codes = new StatusCodes();
+
+        assertEquals("204 No Content", codes.headers.get(204));
+    }
+
+    @Test
     public void itReturnsA302HeaderLine() throws Exception {
         StatusCodes codes = new StatusCodes();
 
