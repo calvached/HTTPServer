@@ -147,4 +147,19 @@ public class RouteDataBuilderTest {
 
         assertEquals(allowedMethods, routeData.allowedMethods());
     }
+
+    @Test
+    public void issuesAFlagIfAPatch() throws Exception {
+        HashMap<String, String> attributes = new HashMap<>();
+        attributes.put("method", "PATCH");
+        attributes.put("path", "/patch-content.txt");
+        attributes.put("params", "patched content");
+
+        Request request = new Request(attributes);
+
+        RouteDataBuilder routeDataBuilder = new RouteDataBuilder();
+        RouteData routeData = routeDataBuilder.assembleRouteData(request);
+
+        assertEquals(true, routeData.isPatch());
+    }
 }

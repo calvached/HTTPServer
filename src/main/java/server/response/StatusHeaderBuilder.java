@@ -21,6 +21,8 @@ public class StatusHeaderBuilder {
             assignStatusHeader(404);
         } else if (routeData.methodNotAllowed()) {
             assignStatusHeader(405);
+        } else if (routeData.isPatch()) {
+            assignStatusHeader(204);
         }
         else {
             assignStatusHeader(200);

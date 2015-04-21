@@ -33,6 +33,9 @@ public class RouteDataBuilder {
             routeData.setAllowedMethods(allowedMethods(request));
             routeData.setIsOptions(true);
         }
+        else if (request.method().equals("PATCH")) {
+            routeData.setIsPatch(true);
+        }
         else if (methodNotAllowed(request.path(), request.method())) {
             routeData.setMethodNotAllowed(true);
         }

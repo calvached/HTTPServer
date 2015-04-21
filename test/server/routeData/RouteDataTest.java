@@ -95,6 +95,17 @@ public class RouteDataTest {
     }
 
     @Test
+    public void setsAFlagIfPatch() throws Exception {
+        RouteData routeData = new RouteData();
+
+        assertEquals(false, routeData.isPatch());
+
+        routeData.setIsPatch(true);
+
+        assertEquals(true, routeData.isPatch());
+    }
+
+    @Test
     public void setsAllowedMethods() throws Exception {
         RouteData routeData = new RouteData();
 
