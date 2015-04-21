@@ -37,6 +37,20 @@ public class StatusHeaderBuilderTest {
     }
 
     @Test
+    public void itBuildsA206StatusHeader() throws Exception {
+        RouteData routeData = new RouteData();
+        routeData.setIsPartialContent(true);
+
+        Response response = new Response();
+
+        StatusHeaderBuilder builder = new StatusHeaderBuilder(routeData, response);
+
+        builder.assembleStatusHeader();
+
+        assertEquals("HTTP/1.1 206 Partial Content\r\n", response.statusHeader());
+    }
+
+    @Test
     public void itBuildsA302StatusHeader() throws Exception {
         RouteData routeData = new RouteData();
         routeData.setIsRedirect(true);

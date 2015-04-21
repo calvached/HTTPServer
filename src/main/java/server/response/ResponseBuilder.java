@@ -19,7 +19,7 @@ public class ResponseBuilder {
         StatusHeaderBuilder statusBuilder = new StatusHeaderBuilder(routeData, response);
         statusBuilder.assembleStatusHeader();
 
-        ContentBuilder contentBuilder = new ContentBuilder(request.method(), routeData, response);
+        ContentBuilder contentBuilder = new ContentBuilder(request, routeData, response);
         contentBuilder.assembleContent();
 
         HeaderBuilder headerBuilder = new HeaderBuilder(routeData, response);

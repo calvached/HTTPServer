@@ -15,12 +15,13 @@ public class RequestStringBuilder {
     }
 
     private HashMap getAttributes(String requestString) {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         RequestParser parser = new RequestParser(requestString);
 
         attributes.put("method", parser.getRequestMethod());
         attributes.put("path", parser.getUrl());
         attributes.put("params", parser.getPostedData());
+        attributes.put("headers", parser.getHeaders());
 
         return attributes;
     }

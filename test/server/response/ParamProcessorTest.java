@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class ParamProcessorTest {
     @Test
     public void itPostsData() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "POST");
         attributes.put("path", "/form");
         attributes.put("params", "param data here");
@@ -36,7 +36,7 @@ public class ParamProcessorTest {
 
     @Test
     public void itUpdatesData() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "PUT");
         attributes.put("path", "/form");
         attributes.put("params", "different data here");
@@ -58,7 +58,7 @@ public class ParamProcessorTest {
 
     @Test
     public void itDeletesData() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "DELETE");
         attributes.put("path", "/form");
         attributes.put("params", "");
@@ -81,7 +81,7 @@ public class ParamProcessorTest {
 
     @Test
     public void itUpdatesDataIfPatch() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "PATCH");
         attributes.put("path", "/form");
         attributes.put("params", "different data here");

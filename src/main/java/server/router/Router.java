@@ -16,7 +16,6 @@ public class Router {
         Request request = requestBuilder.getRequest();
 
         RouteDataBuilder routeDataBuilder = new RouteDataBuilder();
-        // possibly refactor this so that the RDB is initialized with request
         RouteData routeData = routeDataBuilder.assembleRouteData(request);
 
         ResponseBuilder responseBuilder = new ResponseBuilder(request, routeData);

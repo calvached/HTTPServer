@@ -106,6 +106,17 @@ public class RouteDataTest {
     }
 
     @Test
+    public void setsAFlagIfPartialContent() throws Exception {
+        RouteData routeData = new RouteData();
+
+        assertEquals(false, routeData.isPartialContent());
+
+        routeData.setIsPartialContent(true);
+
+        assertEquals(true, routeData.isPartialContent());
+    }
+
+    @Test
     public void setsAllowedMethods() throws Exception {
         RouteData routeData = new RouteData();
 

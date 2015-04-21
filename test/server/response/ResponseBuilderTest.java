@@ -21,7 +21,7 @@ public class ResponseBuilderTest {
         Path filePath = Paths.get("public/file.txt");
         String textToString = new String(Files.readAllBytes(filePath));
 
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "GET");
         attributes.put("path", "/file.txt");
         attributes.put("params", "");
@@ -42,7 +42,7 @@ public class ResponseBuilderTest {
 
     @Test
     public void itReturnsAResponseToAPost() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "POST");
         attributes.put("path", "/form");
         attributes.put("params", "some data");
@@ -60,7 +60,7 @@ public class ResponseBuilderTest {
 
     @Test
     public void itReturnsAResponseToAPut() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "PUT");
         attributes.put("path", "/form");
         attributes.put("params", "different data");
@@ -78,7 +78,7 @@ public class ResponseBuilderTest {
 
     @Test
     public void itReturnsAResponseToADelete() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "DELETE");
         attributes.put("path", "/form");
         attributes.put("params", "");
@@ -98,7 +98,7 @@ public class ResponseBuilderTest {
     public void itReturnsAResponseWithALocationHeader() throws Exception {
         File directoryFile = new File("public/");
 
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "GET");
         attributes.put("path", "/redirect");
         attributes.put("params", "");

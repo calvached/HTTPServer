@@ -22,6 +22,13 @@ public class StatusCodesTest {
     }
 
     @Test
+    public void itReturnsA206HeaderLine() throws Exception {
+        StatusCodes codes = new StatusCodes();
+
+        assertEquals("206 Partial Content", codes.headers.get(206));
+    }
+
+    @Test
     public void itReturnsA302HeaderLine() throws Exception {
         StatusCodes codes = new StatusCodes();
 
