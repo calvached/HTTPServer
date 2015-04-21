@@ -14,7 +14,11 @@ public class RequestStringBuilderTest {
 
     @Test
     public void itBuildsARequestObjectWithAttributes() throws Exception {
-        String testString = "POST /form HTTP/1.1\nContent-Length: 32\n\n{ name=diana }\n";
+        String testString =
+                "POST /form HTTP/1.1\r\n" +
+                "Content-Length: 32\r\n" +
+                "\r\n" +
+                "{ name=diana }";
         InputStream mockInputStream =
                 new ByteArrayInputStream(
                         testString.getBytes(StandardCharsets.UTF_8));
@@ -25,6 +29,7 @@ public class RequestStringBuilderTest {
 
         assertEquals("POST", request.method());
         assertEquals("/form", request.path());
-        assertEquals("{ name=diana }\n", request.params());
+        assertEquals("{ name=diana }", request.params());
+        assertEquals("32", request.headers().get("Content-Length"));
     }
 }

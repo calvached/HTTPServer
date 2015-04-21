@@ -6,11 +6,13 @@ public class Request {
     private final String method;
     private final String path;
     private final String params;
+    private final HashMap headers;
 
-    public Request(HashMap<String, String> attributes) {
-        method = attributes.get("method");
-        path = attributes.get("path");
-        params = attributes.get("params");
+    public Request(HashMap<String, Object> attributes) {
+        method = (String) attributes.get("method");
+        path = (String) attributes.get("path");
+        params = (String) attributes.get("params");
+        headers = (HashMap) attributes.get("headers");
     }
 
     public String method() {
@@ -23,5 +25,9 @@ public class Request {
 
     public String params() {
         return params;
+    }
+
+    public HashMap headers() {
+        return headers;
     }
 }

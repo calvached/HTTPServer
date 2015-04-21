@@ -17,14 +17,19 @@ public class StatusHeaderBuilder {
     public void assembleStatusHeader() {
         if (routeData.isRedirect()) {
             assignStatusHeader(302);
-        } else if (routeData.notFound()) {
-            assignStatusHeader(404);
-        } else if (routeData.methodNotAllowed()) {
-            assignStatusHeader(405);
-        } else if (routeData.isPatch()) {
-            assignStatusHeader(204);
         }
-        else {
+        else if (routeData.notFound()) {
+            assignStatusHeader(404);
+        }
+        else if (routeData.methodNotAllowed()) {
+            assignStatusHeader(405);
+        }
+        else if (routeData.isPartialContent()) {
+            assignStatusHeader(206);
+        }
+        else if (routeData.isPatch()) {
+            assignStatusHeader(204);
+        } else {
             assignStatusHeader(200);
         }
     }

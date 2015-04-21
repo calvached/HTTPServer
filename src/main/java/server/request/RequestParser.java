@@ -1,5 +1,6 @@
 package main.java.server.request;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +36,27 @@ public class RequestParser {
         String[] lines = requestString.split(" ");
 
         return lines[1];
+    }
+
+    public HashMap getHeaders() {
+        HashMap<String, String> headers = new HashMap<>();
+
+        for (String header : getAllHeaderLines()) {
+            if (header.contains(": ")) {
+                String[] splitHeader = header.split(": ");
+                headers.put(splitHeader[0], splitHeader[1].trim());
+            }
+        }
+
+        return headers;
+    }
+
+    private String[] getAllHeaderLines() {
+        return getHeaderChunk().split("\n");
+    }
+
+    private String getHeaderChunk() {
+        return requestString.split("\r\n\r\n")[0];
     }
 
     private String blankLine() {

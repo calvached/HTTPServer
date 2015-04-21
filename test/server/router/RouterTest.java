@@ -40,7 +40,27 @@ public class RouterTest {
     }
 
     @Test
-    public void itWritesA404ResponseToTheStreamIfMethodDoesNotExist() throws Exception {
+    public void itRespondsToAPostRequestWithA200() throws Exception {
+        String testString = "POST /form HTTP/1.1\r\n"
+                + "Content-Length: 32\r\n\r\n"
+                + "param data here";
+        InputStream mockInputStream =
+                new ByteArrayInputStream(
+                        testString.getBytes(StandardCharsets.UTF_8));
+
+        ByteArrayOutputStream mockOutputStream =
+                new ByteArrayOutputStream();
+
+        Router router = new Router();
+        router.directTrafficFor(mockInputStream, mockOutputStream);
+
+        assertEquals(
+                "HTTP/1.1 200 OK",
+                mockOutputStream.toString().trim());
+    }
+
+    @Test
+    public void itRespondsToARequestWithA404() throws Exception {
         String testString = "GET /fakeRoute HTTP/1.1\r\n" + "Content-Length: 32";
         InputStream mockInputStream =
                 new ByteArrayInputStream(
@@ -53,5 +73,25 @@ public class RouterTest {
         router.directTrafficFor(mockInputStream, mockOutputStream);
 
         assertEquals("HTTP/1.1 404 Not Found", mockOutputStream.toString().trim());
+    }
+
+    @Test
+    public void itRespondsToARequestWithA405() throws Exception {
+        String testString = "POST / HTTP/1.1\r\n"
+                + "Content-Length: 32\r\n\r\n"
+                + "param data here";
+        InputStream mockInputStream =
+                new ByteArrayInputStream(
+                        testString.getBytes(StandardCharsets.UTF_8));
+
+        ByteArrayOutputStream mockOutputStream =
+                new ByteArrayOutputStream();
+
+        Router router = new Router();
+        router.directTrafficFor(mockInputStream, mockOutputStream);
+
+        assertEquals(
+                "HTTP/1.1 405 Method Not Allowed",
+                mockOutputStream.toString().trim());
     }
 }

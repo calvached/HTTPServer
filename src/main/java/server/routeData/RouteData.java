@@ -8,6 +8,7 @@ public class RouteData {
     private boolean isRedirect = false;
     private boolean isOptions = false;
     private boolean isPatch = false;
+    private boolean isPartialContent = false;
     private String redirectPath = "";
     private String contentPath = "";
     private String allowedMethods = "";
@@ -66,6 +67,14 @@ public class RouteData {
 
     public void setIsPatch(boolean flag) {
         isPatch = flag;
+    }
+
+    public boolean isPartialContent() {
+        return isPartialContent;
+    }
+
+    public void setIsPartialContent(boolean flag) {
+        isPartialContent = flag;
     }
 
     public String redirectPath() {

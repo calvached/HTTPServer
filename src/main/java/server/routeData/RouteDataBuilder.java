@@ -36,6 +36,9 @@ public class RouteDataBuilder {
         else if (request.method().equals("PATCH")) {
             routeData.setIsPatch(true);
         }
+        else if (isPartialContent(request)) {
+            routeData.setIsPartialContent(true);
+        }
         else if (methodNotAllowed(request.path(), request.method())) {
             routeData.setMethodNotAllowed(true);
         }
@@ -95,6 +98,10 @@ public class RouteDataBuilder {
         String[] allowedMethods = (String[]) validRoutes.routes.get(path).get("allowedMethods");
 
         return !Arrays.asList(allowedMethods).contains(method);
+    }
+
+    private boolean isPartialContent(Request request) {
+        return request.headers().containsKey("Range");
     }
 
     private String getRedirectionPath(Request request) {

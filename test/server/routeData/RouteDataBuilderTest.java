@@ -13,7 +13,7 @@ public class RouteDataBuilderTest {
 
     @Test
     public void createsRouteDataWithNewRedirectPath() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "GET");
         attributes.put("path", "/redirect");
         attributes.put("params", "");
@@ -28,7 +28,7 @@ public class RouteDataBuilderTest {
 
     @Test
     public void issuesAFlagIfPathRedirects() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "GET");
         attributes.put("path", "/redirect");
         attributes.put("params", "");
@@ -43,10 +43,13 @@ public class RouteDataBuilderTest {
 
     @Test
     public void issuesAFlagIfTheRequestHasAMethodNotAllowed() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
+
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "POST");
         attributes.put("path", "/");
         attributes.put("params", "");
+        attributes.put("headers", headers);
 
         Request request = new Request(attributes);
 
@@ -58,7 +61,7 @@ public class RouteDataBuilderTest {
 
     @Test
     public void issuesAFlagIfTheRequestHasARouteThatIsNotFound() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "GET");
         attributes.put("path", "/noRoute");
         attributes.put("params", "");
@@ -73,10 +76,13 @@ public class RouteDataBuilderTest {
 
     @Test
     public void issuesAFlagWithTheContentTypeOfDirectoryIfItExists() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
+
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "GET");
         attributes.put("path", "/");
         attributes.put("params", "");
+        attributes.put("headers", headers);
 
         Request request = new Request(attributes);
 
@@ -88,7 +94,8 @@ public class RouteDataBuilderTest {
 
     @Test
     public void issuesAFlagWithTheContentTypeOfDirectoryIfItRedirects() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "GET");
         attributes.put("path", "/redirect");
         attributes.put("params", "");
@@ -103,10 +110,13 @@ public class RouteDataBuilderTest {
 
     @Test
     public void issuesAFlagWithTheContentTypeOfFileIfItExists() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
+
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "GET");
         attributes.put("path", "/file1");
         attributes.put("params", "");
+        attributes.put("headers", headers);
 
         Request request = new Request(attributes);
 
@@ -118,7 +128,7 @@ public class RouteDataBuilderTest {
 
     @Test
     public void issuesAFlagIfRequestMethodIsOptions() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "OPTIONS");
         attributes.put("path", "/method_options");
         attributes.put("params", "");
@@ -135,7 +145,7 @@ public class RouteDataBuilderTest {
     public void issuesAllowedMethodsIfRequestMethodIsOptions() throws Exception {
         String allowedMethods = "GET,HEAD,POST,OPTIONS,PUT";
 
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "OPTIONS");
         attributes.put("path", "/method_options");
         attributes.put("params", "");
@@ -150,7 +160,7 @@ public class RouteDataBuilderTest {
 
     @Test
     public void issuesAFlagIfAPatch() throws Exception {
-        HashMap<String, String> attributes = new HashMap<>();
+        HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "PATCH");
         attributes.put("path", "/patch-content.txt");
         attributes.put("params", "patched content");
@@ -161,5 +171,24 @@ public class RouteDataBuilderTest {
         RouteData routeData = routeDataBuilder.assembleRouteData(request);
 
         assertEquals(true, routeData.isPatch());
+    }
+
+    @Test
+    public void issuesAFlagIfPartialContent() throws Exception {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Range", "bytes=0-4");
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("method", "Get");
+        attributes.put("path", "/patch-content.txt");
+        attributes.put("params", "patched content");
+        attributes.put("headers", headers);
+
+        Request request = new Request(attributes);
+
+        RouteDataBuilder routeDataBuilder = new RouteDataBuilder();
+        RouteData routeData = routeDataBuilder.assembleRouteData(request);
+
+        assertEquals(true, routeData.isPartialContent());
     }
 }
