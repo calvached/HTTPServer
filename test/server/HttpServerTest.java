@@ -13,9 +13,8 @@ public class HttpServerTest {
     @Test
     public void itRespondsToARequest() throws Exception {
         MockServerSocket serverSocket = new MockServerSocket(3000);
-        Router router = new Router();
 
-        HttpServer server = new HttpServer(serverSocket, router);
+        HttpServer server = new HttpServer(serverSocket);
         server.start();
 
         String outputResponse = serverSocket.getOutputResponse();

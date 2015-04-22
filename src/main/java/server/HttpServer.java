@@ -10,11 +10,9 @@ import java.net.Socket;
 
 public class HttpServer {
     private ServerSocket serverSocket;
-    private Router router;
 
-    public HttpServer(ServerSocket boundSocket, Router methodRouter) {
+    public HttpServer(ServerSocket boundSocket) {
         serverSocket = boundSocket;
-        router = methodRouter;
     }
 
     public void start() throws IOException {
@@ -47,7 +45,8 @@ public class HttpServer {
             InputStream in = clientSocket.getInputStream();
             OutputStream out = clientSocket.getOutputStream();
 
-            router.directTrafficFor(in, out);
+            Router router = new Router(in, out);
+            router.directTrafficFor();
         } catch (IOException e) {
             e.printStackTrace();
         }

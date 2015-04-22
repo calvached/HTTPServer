@@ -11,7 +11,14 @@ import main.java.server.routeData.RouteDataBuilder;
 import java.io.*;
 
 public class Router {
-    public void directTrafficFor(InputStream in, OutputStream out) throws IOException {
+    private final InputStream in;
+    private final OutputStream out;
+
+    public Router(InputStream in, OutputStream out) {
+        this.in = in;
+        this.out = out;
+    }
+    public void directTrafficFor() throws IOException {
         RequestStringBuilder requestBuilder = new RequestStringBuilder(in);
         Request request = requestBuilder.getRequest();
 
