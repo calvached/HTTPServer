@@ -72,7 +72,8 @@ public class RouterTest {
         Router router = new Router(mockInputStream, mockOutputStream);
         router.directTrafficFor();
 
-        assertEquals("HTTP/1.1 404 Not Found", mockOutputStream.toString().trim());
+        assertEquals("HTTP/1.1 404 Not Found",
+                mockOutputStream.toString().trim());
     }
 
     @Test

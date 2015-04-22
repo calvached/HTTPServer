@@ -19,16 +19,34 @@ public class Router {
         this.out = out;
     }
     public void directTrafficFor() throws IOException {
+        Request request = getRequest();
+        RouteData routeData = getRouteData(request);
+        Response response = getResponse(request, routeData);
+
+        send(response);
+    }
+
+    private Request getRequest() {
         RequestStringBuilder requestBuilder = new RequestStringBuilder(in);
-        Request request = requestBuilder.getRequest();
 
+        return requestBuilder.getRequest();
+    }
+
+    private RouteData getRouteData(Request request) {
         RouteDataBuilder routeDataBuilder = new RouteDataBuilder();
-        RouteData routeData = routeDataBuilder.assembleRouteData(request);
 
+        return routeDataBuilder.assembleRouteData(request);
+    }
+
+    private Response getResponse(Request request, RouteData routeData) throws IOException {
         ResponseBuilder responseBuilder = new ResponseBuilder(request, routeData);
-        Response response = responseBuilder.getResponse();
 
+        return responseBuilder.getResponse();
+    }
+
+    private void send(Response response) throws IOException {
         ResponseSender sender = new ResponseSender(out);
+
         sender.send(response);
     }
 }
