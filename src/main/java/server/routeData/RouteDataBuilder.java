@@ -19,9 +19,29 @@ public class RouteDataBuilder {
         if (existingPathIsValid(request.path())) {
             determinePathType(request);
             assignRouteDataContent(request);
+        }
+        else if (validPathWithQueryString(request)) {
+            routeData.setHasQueryString(true);
+            routeData.setQueryString(splitPath(request)[1]);
         } else {
             routeData.setNotFound(true);
         }
+    }
+
+    private boolean validPathWithQueryString(Request request) {
+        String requestPath = splitPath(request)[0];
+
+        return hasQueryString(request) && existingPathIsValid(requestPath);
+    }
+
+    private String[] splitPath(Request request) {
+        return request.path().split("\\?");
+    }
+
+    private boolean hasQueryString(Request request) {
+        int splitPathSize = splitPath(request).length;
+
+        return splitPathSize == 2;
     }
 
     private void determinePathType(Request request) {

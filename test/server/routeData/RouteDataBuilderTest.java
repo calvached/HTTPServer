@@ -179,7 +179,7 @@ public class RouteDataBuilderTest {
         headers.put("Range", "bytes=0-4");
 
         HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("method", "Get");
+        attributes.put("method", "GET");
         attributes.put("path", "/patch-content.txt");
         attributes.put("params", "patched content");
         attributes.put("headers", headers);
@@ -190,5 +190,42 @@ public class RouteDataBuilderTest {
         RouteData routeData = routeDataBuilder.assembleRouteData(request);
 
         assertEquals(true, routeData.isPartialContent());
+    }
+
+    @Test
+    public void issuesAFlagIfPathHasQueryString() throws Exception {
+        HashMap<String, String> headers = new HashMap<>();
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("method", "GET");
+        attributes.put("path", "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff");
+        attributes.put("params", "");
+        attributes.put("headers", headers);
+
+        Request request = new Request(attributes);
+
+        RouteDataBuilder routeDataBuilder = new RouteDataBuilder();
+        RouteData routeData = routeDataBuilder.assembleRouteData(request);
+
+        assertEquals(true, routeData.hasQueryString());
+    }
+
+    @Test
+    public void issuesParamsIfPathHasQueryString() throws Exception {
+        HashMap<String, String> headers = new HashMap<>();
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("method", "GET");
+        attributes.put("path", "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff");
+        attributes.put("params", "");
+        attributes.put("headers", headers);
+
+        Request request = new Request(attributes);
+
+        RouteDataBuilder routeDataBuilder = new RouteDataBuilder();
+        RouteData routeData = routeDataBuilder.assembleRouteData(request);
+
+        assertEquals("variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff",
+                routeData.queryString());
     }
 }
