@@ -12,12 +12,15 @@ public class RequestParser {
     }
 
     public String getRequestMethod() {
+        String requestMethod = "";
         Pattern method = Pattern.compile("^(\\w+).+");
         Matcher methodMatcher = method.matcher(requestString);
 
-        methodMatcher.find();
+        if (methodMatcher.find()) {
+           requestMethod = methodMatcher.group(1);
+        }
 
-        return methodMatcher.group(1);
+        return requestMethod;
     }
 
     public String getPostedData() {
@@ -33,9 +36,14 @@ public class RequestParser {
     }
 
     public String getUrl() {
+        String url = "";
         String[] lines = requestString.split(" ");
 
-        return lines[1];
+        if (lines.length > 1) {
+            url = lines[1];
+        }
+
+        return url;
     }
 
     public HashMap getHeaders() {

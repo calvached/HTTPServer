@@ -154,4 +154,30 @@ public class RequestParserTest {
 
         assertEquals(headers, parsedHeaders);
     }
+
+    @Test
+    public void itReturnsAnEmptyStringIfNoMethod() throws Exception {
+        String requestString =
+                "/form HTTP/1.0\r\n"+
+                        "From: frog@jmarshall.com\r\n"+
+                        "User-Agent: HTTPTool/1.0\r\n"+
+                        "Content-Type: application/x-www-form-urlencoded\r\n"+
+                        "Content-Length: 32";
+
+        RequestParser parser = new RequestParser(requestString);
+        String method = parser.getRequestMethod();
+
+        assertEquals("", method);
+    }
+
+    @Test
+    public void itReturnsAnEmptyStringIfNoUrl() throws Exception {
+        String requestString =
+                "GET\r\n";
+
+        RequestParser parser = new RequestParser(requestString);
+        String url = parser.getUrl();
+
+        assertEquals("", url);
+    }
 }

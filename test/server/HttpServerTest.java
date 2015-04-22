@@ -2,6 +2,7 @@ package server;
 
 import main.java.server.HttpServer;
 import main.java.server.router.Router;
+import mocks.MockBadServerSocket;
 import mocks.MockServerSocket;
 
 import org.junit.Test;
@@ -30,5 +31,17 @@ public class HttpServerTest {
                 "<a href='/patch-content.txt'>patch-content.txt</a>\r\n" +
                 "<a href='/postData.txt'>postData.txt</a>\r\n" +
                 "<a href='/text-file.txt'>text-file.txt</a>\r\n", outputResponse);
+    }
+
+    @Test
+    public void itRespondsToABadRequest() throws Exception {
+        MockBadServerSocket serverSocket = new MockBadServerSocket(3000);
+
+        HttpServer server = new HttpServer(serverSocket);
+        server.start();
+
+        String outputResponse = serverSocket.getOutputResponse();
+
+        assertEquals("HTTP/1.1 400 Bad Request\r\n\r\n", outputResponse);
     }
 }
