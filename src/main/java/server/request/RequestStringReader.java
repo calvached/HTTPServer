@@ -26,9 +26,10 @@ public class RequestStringReader {
 
         try {
             String line = reader.readLine();
-            request += line + "\n";
 
             if (reader.ready()) {
+                request += line + "\n";
+
                 while (reader.ready()) {
                     int content = reader.read();
                     request += ((char) content);
