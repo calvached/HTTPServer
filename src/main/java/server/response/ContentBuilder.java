@@ -156,8 +156,8 @@ public class ContentBuilder {
         return request.headers().get("Range").toString().split("=")[1];
     }
 
-    private String createTemplate(File file) {
-        String[] fileList = file.list();
+    private String createTemplate(File directory) {
+        String[] fileList = directory.list();
         DirectoryTemplate templateMaker = new DirectoryTemplate(fileList);
 
         return templateMaker.getTemplate();

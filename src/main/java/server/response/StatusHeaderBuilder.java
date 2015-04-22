@@ -15,29 +15,33 @@ public class StatusHeaderBuilder {
     }
 
     public void assembleStatusHeader() {
+        assignStatusHeader(getStatusCodeNumber());
+    }
+
+    private int getStatusCodeNumber() {
         if (routeData.isRedirect()) {
-            assignStatusHeader(302);
+            return 302;
         }
         else if (routeData.badRequest()) {
-            assignStatusHeader(400);
+            return 400;
         }
         else if (routeData.notFound()) {
-            assignStatusHeader(404);
+            return 404;
         }
         else if (routeData.methodNotAllowed()) {
-            assignStatusHeader(405);
+            return 405;
         }
         else if (routeData.isPartialContent()) {
-            assignStatusHeader(206);
+            return 206;
         }
         else if (routeData.isPatch()) {
-            assignStatusHeader(204);
+            return 204;
         }
         else if (unauthorized()) {
-            assignStatusHeader(401);
+            return 401;
         }
         else {
-            assignStatusHeader(200);
+            return 200;
         }
     }
 

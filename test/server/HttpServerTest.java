@@ -1,7 +1,6 @@
 package server;
 
 import main.java.server.HttpServer;
-import main.java.server.router.Router;
 import mocks.MockBadServerSocket;
 import mocks.MockServerSocket;
 
@@ -10,7 +9,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class HttpServerTest {
-
     @Test
     public void itRespondsToARequest() throws Exception {
         MockServerSocket serverSocket = new MockServerSocket(3000);
