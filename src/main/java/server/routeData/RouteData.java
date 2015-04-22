@@ -9,8 +9,10 @@ public class RouteData {
     private boolean isOptions = false;
     private boolean isPatch = false;
     private boolean isPartialContent = false;
+    private boolean hasQueryString = false;
     private String redirectPath = "";
     private String contentPath = "";
+    private String queryString = "";
     private String allowedMethods = "";
 
     public boolean notFound() {
@@ -75,6 +77,22 @@ public class RouteData {
 
     public void setIsPartialContent(boolean flag) {
         isPartialContent = flag;
+    }
+
+    public boolean hasQueryString() {
+        return hasQueryString;
+    }
+
+    public void setHasQueryString(boolean flag) {
+        hasQueryString = flag;
+    }
+
+    public String queryString() {
+        return queryString;
+    }
+
+    public void setQueryString(String string) {
+        queryString = string;
     }
 
     public String redirectPath() {

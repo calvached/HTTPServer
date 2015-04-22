@@ -37,9 +37,48 @@ public class ContentBuilder {
         }
         else if (routeData.isPartialContent()) {
             buildPartialContent();
+        }
+        else if (routeData.hasQueryString()) {
+            buildContentFromQueryString();
         } else {
             assignFilePathToResponse();
         }
+    }
+
+    private void buildContentFromQueryString() {
+        String content = "";
+
+        for (String parameter : paramsFromQueryString()) {
+            content += decode(parameter) + "\r\n";
+        }
+
+        response.setBody(convertToBytes(content));
+    }
+
+    private String decode(String parameter) {
+        String decodedString = "";
+        String[] parameterCharacterList = parameter.split("");
+
+        for (int i = 0; i < parameterCharacterList.length; i++) {
+            if (parameterCharacterList[i].equals("=")) {
+                decodedString += " " + parameterCharacterList[i] + " " ;
+            }
+            else if (parameterCharacterList[i].equals("%")) {
+                String hexSet = parameterCharacterList[i + 1] + parameterCharacterList[i + 2];
+                int decimal = Integer.parseInt(hexSet, 16);
+                decodedString += (char)decimal;
+
+                i += 2;
+            } else {
+                decodedString += parameterCharacterList[i];
+            }
+        }
+
+        return decodedString;
+    }
+
+    private String[] paramsFromQueryString() {
+        return routeData.queryString().split("&");
     }
 
     private void buildPartialContent() throws IOException {

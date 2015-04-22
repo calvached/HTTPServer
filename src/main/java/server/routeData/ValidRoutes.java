@@ -9,6 +9,7 @@ public class ValidRoutes {
     {
         routes.put("/",                    indexPage());
         routes.put("/form",                formPage());
+        routes.put("/parameters",          decodeQueryString());
         routes.put("/patch-content.txt",   patchEtagPage("patch-content.txt"));
         routes.put("/method_options",      methodOptionsPage());
         routes.put("/redirect",            redirectTo("/"));
@@ -20,6 +21,17 @@ public class ValidRoutes {
         routes.put("/file1",               loadFile("file1"));
         routes.put("/file2",               loadFile("file1"));
         routes.put("/text-file.txt",       loadFile("text-file.txt"));
+    }
+
+    private HashMap decodeQueryString() {
+        String[] methods = {
+                "GET"
+        };
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("allowedMethods", methods);
+
+        return data;
     }
 
     private HashMap patchEtagPage(String file) {
