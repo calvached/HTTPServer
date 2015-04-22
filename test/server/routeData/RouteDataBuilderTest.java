@@ -228,4 +228,61 @@ public class RouteDataBuilderTest {
         assertEquals("variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff",
                 routeData.queryString());
     }
+
+    @Test
+    public void setsRequireAuthenticationFlagIfAuthenticationIsRequired() throws Exception {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Basic YWRtaW46aHVudGVyMg==");
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("method", "GET");
+        attributes.put("path", "/logs");
+        attributes.put("params", "");
+        attributes.put("headers", headers);
+
+        Request request = new Request(attributes);
+
+        RouteDataBuilder routeDataBuilder = new RouteDataBuilder();
+        RouteData routeData = routeDataBuilder.assembleRouteData(request);
+
+        assertEquals(true, routeData.requireAuthentication());
+    }
+
+    @Test
+    public void setsAuthorizationFlagIfAuthenticationCredentialsExist() throws Exception {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Basic YWRtaW46aHVudGVyMg==");
+        // routeData.setAuthorization(true) if header exists
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("method", "GET");
+        attributes.put("path", "/logs");
+        attributes.put("params", "");
+        attributes.put("headers", headers);
+
+        Request request = new Request(attributes);
+
+        RouteDataBuilder routeDataBuilder = new RouteDataBuilder();
+        RouteData routeData = routeDataBuilder.assembleRouteData(request);
+
+        assertEquals(true, routeData.authorization());
+    }
+
+    @Test
+    public void doesNotSetAuthorizationFlagIfAuthenticationCredentialsDoNotExist() throws Exception {
+        HashMap<String, String> headers = new HashMap<>();
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("method", "GET");
+        attributes.put("path", "/logs");
+        attributes.put("params", "");
+        attributes.put("headers", headers);
+
+        Request request = new Request(attributes);
+
+        RouteDataBuilder routeDataBuilder = new RouteDataBuilder();
+        RouteData routeData = routeDataBuilder.assembleRouteData(request);
+
+        assertEquals(false, routeData.authorization());
+    }
 }

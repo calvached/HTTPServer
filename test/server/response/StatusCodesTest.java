@@ -36,6 +36,13 @@ public class StatusCodesTest {
     }
 
     @Test
+    public void itReturnsA401HeaderLine() throws Exception {
+        StatusCodes codes = new StatusCodes();
+
+        assertEquals("401 Unauthorized", codes.headers.get(401));
+    }
+
+    @Test
     public void itReturnsA404HeaderLine() throws Exception {
         StatusCodes codes = new StatusCodes();
 

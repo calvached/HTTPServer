@@ -62,6 +62,28 @@ public class RouteDataBuilder {
         else if (methodNotAllowed(request.path(), request.method())) {
             routeData.setMethodNotAllowed(true);
         }
+        else if (requiresAuthentication(request.path())) {
+            routeData.setRequireAuthentication(true);
+            verifyAuthorization(request);
+        }
+    }
+
+    private void verifyAuthorization(Request request) {
+        if (authorizationKeyExists(request) && keyMatchesCredentials(request)) {
+            routeData.setAuthorization(true);
+        }
+    }
+
+    private boolean keyMatchesCredentials(Request request) {
+        return request.headers().get("Authorization").equals("Basic YWRtaW46aHVudGVyMg==");
+    }
+
+    private boolean authorizationKeyExists(Request request) {
+        return request.headers().containsKey("Authorization");
+    }
+
+    private boolean requiresAuthentication(String path) {
+        return validRoutes.routes.get(path).containsKey("requireAuthentication");
     }
 
     private void assignRouteDataContent(Request request) {

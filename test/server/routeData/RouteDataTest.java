@@ -149,4 +149,26 @@ public class RouteDataTest {
 
         assertEquals("GET,POST,DELETE", routeData.allowedMethods());
     }
+
+    @Test
+    public void setsAFlagIfAuthenticationIsRequired() throws Exception {
+        RouteData routeData = new RouteData();
+
+        assertEquals(false, routeData.requireAuthentication());
+
+        routeData.setRequireAuthentication(true);
+
+        assertEquals(true, routeData.requireAuthentication());
+    }
+
+    @Test
+    public void setsAFlagIfAuthorizationIsGranted() throws Exception {
+        RouteData routeData = new RouteData();
+
+        assertEquals(false, routeData.authorization());
+
+        routeData.setAuthorization(true);
+
+        assertEquals(true, routeData.authorization());
+    }
 }

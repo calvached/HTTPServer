@@ -10,6 +10,8 @@ public class RouteData {
     private boolean isPatch = false;
     private boolean isPartialContent = false;
     private boolean hasQueryString = false;
+    private boolean requireAuthentication = false;
+    private boolean authorization = false;
     private String redirectPath = "";
     private String contentPath = "";
     private String queryString = "";
@@ -85,6 +87,22 @@ public class RouteData {
 
     public void setHasQueryString(boolean flag) {
         hasQueryString = flag;
+    }
+
+    public boolean requireAuthentication() {
+        return requireAuthentication;
+    }
+
+    public void setRequireAuthentication(boolean flag) {
+        requireAuthentication = flag;
+    }
+
+    public boolean authorization() {
+        return authorization;
+    }
+
+    public void setAuthorization(boolean flag) {
+        authorization = flag;
     }
 
     public String queryString() {
