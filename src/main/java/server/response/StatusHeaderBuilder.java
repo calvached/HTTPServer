@@ -29,9 +29,17 @@ public class StatusHeaderBuilder {
         }
         else if (routeData.isPatch()) {
             assignStatusHeader(204);
-        } else {
+        }
+        else if (unauthorized()) {
+            assignStatusHeader(401);
+        }
+        else {
             assignStatusHeader(200);
         }
+    }
+
+    private boolean unauthorized() {
+        return routeData.requireAuthentication() && !routeData.authorization();
     }
 
     private void assignStatusHeader(int statusCode) {

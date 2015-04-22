@@ -11,6 +11,7 @@ public class StatusCodes {
         headers.put(204, "204 No Content");
         headers.put(206, "206 Partial Content");
         headers.put(302, "302 Found");
+        headers.put(401, "401 Unauthorized");
         headers.put(404, "404 Not Found");
         headers.put(405, "405 Method Not Allowed");
     }

@@ -40,8 +40,20 @@ public class ContentBuilder {
         }
         else if (routeData.hasQueryString()) {
             buildContentFromQueryString();
-        } else {
+        }
+        else if (routeData.requireAuthentication()) {
+            buildAuthenticationContent();
+        }
+        else if (routeData.isFile()){
             assignFilePathToResponse();
+        }
+    }
+
+    private void buildAuthenticationContent() {
+        if (routeData.authorization()) {
+            response.setBody(convertToBytes("GET /log HTTP/1.1\r\nPUT /these HTTP/1.1\r\nHEAD /requests HTTP/1.1"));
+        } else {
+            response.setBody(convertToBytes("Authentication required"));
         }
     }
 

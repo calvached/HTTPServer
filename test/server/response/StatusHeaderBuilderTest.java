@@ -65,6 +65,21 @@ public class StatusHeaderBuilderTest {
     }
 
     @Test
+    public void itBuildsA401StatusHeader() throws Exception {
+        RouteData routeData = new RouteData();
+        routeData.setRequireAuthentication(true);
+        routeData.setAuthorization(false);
+
+        Response response = new Response();
+
+        StatusHeaderBuilder builder = new StatusHeaderBuilder(routeData, response);
+
+        builder.assembleStatusHeader();
+
+        assertEquals("HTTP/1.1 401 Unauthorized\r\n", response.statusHeader());
+    }
+
+    @Test
     public void itBuildsA404StatusHeader() throws Exception {
         RouteData routeData = new RouteData();
         routeData.setNotFound(true);

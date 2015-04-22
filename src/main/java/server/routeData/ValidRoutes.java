@@ -8,6 +8,7 @@ public class ValidRoutes {
 
     {
         routes.put("/",                    indexPage());
+        routes.put("/logs",                authenticatePage());
         routes.put("/form",                formPage());
         routes.put("/parameters",          decodeQueryString());
         routes.put("/patch-content.txt",   patchEtagPage("patch-content.txt"));
@@ -21,6 +22,18 @@ public class ValidRoutes {
         routes.put("/file1",               loadFile("file1"));
         routes.put("/file2",               loadFile("file1"));
         routes.put("/text-file.txt",       loadFile("text-file.txt"));
+    }
+
+    private HashMap authenticatePage() {
+        String[] methods = {
+                "GET"
+        };
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("allowedMethods", methods);
+        data.put("requireAuthentication", true);
+
+        return data;
     }
 
     private HashMap decodeQueryString() {

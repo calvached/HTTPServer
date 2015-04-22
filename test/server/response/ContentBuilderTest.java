@@ -243,4 +243,54 @@ public class ContentBuilderTest {
         assertEquals("variable_1 = Operators <, >, =, !=; +, -, *, &, @, #, $, [, ]: \"is that all\"?\r\n" +
                 "variable_2 = stuff\r\n", bodyToString);
     }
+
+    @Test
+    public void itBuildsAuthenticationContentForUnauthorizedRequest() throws Exception {
+        HashMap<String, String> headers = new HashMap<>();
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("method", "GET");
+        attributes.put("path", "/logs");
+        attributes.put("params", "");
+        attributes.put("headers", headers);
+        Request request = new Request(attributes);
+
+        RouteData routeData = new RouteData();
+        routeData.setRequireAuthentication(true);
+        routeData.setAuthorization(false);
+
+        Response response = new Response();
+
+        ContentBuilder contentBuilder = new ContentBuilder(request, routeData, response);
+        contentBuilder.assembleContent();
+
+        String bodyToString = new String(response.body());
+
+        assertEquals("Authentication required", bodyToString);
+    }
+
+    @Test
+    public void itBuildsAuthenticationContentForAuthorizedRequest() throws Exception {
+        HashMap<String, String> headers = new HashMap<>();
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("method", "GET");
+        attributes.put("path", "/logs");
+        attributes.put("params", "");
+        attributes.put("headers", headers);
+        Request request = new Request(attributes);
+
+        RouteData routeData = new RouteData();
+        routeData.setRequireAuthentication(true);
+        routeData.setAuthorization(true);
+
+        Response response = new Response();
+
+        ContentBuilder contentBuilder = new ContentBuilder(request, routeData, response);
+        contentBuilder.assembleContent();
+
+        String bodyToString = new String(response.body());
+
+        assertEquals("GET /log HTTP/1.1\r\nPUT /these HTTP/1.1\r\nHEAD /requests HTTP/1.1", bodyToString);
+    }
 }
