@@ -18,6 +18,9 @@ public class StatusHeaderBuilder {
         if (routeData.isRedirect()) {
             assignStatusHeader(302);
         }
+        else if (routeData.badRequest()) {
+            assignStatusHeader(400);
+        }
         else if (routeData.notFound()) {
             assignStatusHeader(404);
         }

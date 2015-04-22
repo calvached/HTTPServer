@@ -36,6 +36,13 @@ public class StatusCodesTest {
     }
 
     @Test
+    public void itReturnsA400HeaderLine() throws Exception {
+        StatusCodes codes = new StatusCodes();
+
+        assertEquals("400 Bad Request", codes.headers.get(400));
+    }
+
+    @Test
     public void itReturnsA401HeaderLine() throws Exception {
         StatusCodes codes = new StatusCodes();
 

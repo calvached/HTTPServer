@@ -23,9 +23,17 @@ public class RouteDataBuilder {
         else if (validPathWithQueryString(request)) {
             routeData.setHasQueryString(true);
             routeData.setQueryString(splitPath(request)[1]);
-        } else {
+        }
+        else if (badRequest(request)) {
+            routeData.setBadRequest(true);
+        }
+        else {
             routeData.setNotFound(true);
         }
+    }
+
+    private boolean badRequest(Request request) {
+        return request.path().equals("") || request.method().equals("");
     }
 
     private boolean validPathWithQueryString(Request request) {

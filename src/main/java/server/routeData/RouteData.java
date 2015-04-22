@@ -12,6 +12,7 @@ public class RouteData {
     private boolean hasQueryString = false;
     private boolean requireAuthentication = false;
     private boolean authorization = false;
+    private boolean badRequest = false;
     private String redirectPath = "";
     private String contentPath = "";
     private String queryString = "";
@@ -23,6 +24,14 @@ public class RouteData {
 
     public void setNotFound(boolean flag) {
         notFound = flag;
+    }
+
+    public boolean badRequest() {
+        return badRequest;
+    }
+
+    public void setBadRequest(boolean flag) {
+        badRequest = flag;
     }
 
     public boolean methodNotAllowed() {

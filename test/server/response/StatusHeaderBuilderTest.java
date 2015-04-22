@@ -65,6 +65,20 @@ public class StatusHeaderBuilderTest {
     }
 
     @Test
+    public void itBuildsA400StatusHeader() throws Exception {
+        RouteData routeData = new RouteData();
+        routeData.setBadRequest(true);
+
+        Response response = new Response();
+
+        StatusHeaderBuilder builder = new StatusHeaderBuilder(routeData, response);
+
+        builder.assembleStatusHeader();
+
+        assertEquals("HTTP/1.1 400 Bad Request\r\n", response.statusHeader());
+    }
+
+    @Test
     public void itBuildsA401StatusHeader() throws Exception {
         RouteData routeData = new RouteData();
         routeData.setRequireAuthentication(true);

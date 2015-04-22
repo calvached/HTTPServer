@@ -171,4 +171,15 @@ public class RouteDataTest {
 
         assertEquals(true, routeData.authorization());
     }
+
+    @Test
+    public void setsAFlagBadRequest() throws Exception {
+        RouteData routeData = new RouteData();
+
+        assertEquals(false, routeData.badRequest());
+
+        routeData.setBadRequest(true);
+
+        assertEquals(true, routeData.badRequest());
+    }
 }

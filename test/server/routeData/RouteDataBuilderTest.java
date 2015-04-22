@@ -285,4 +285,22 @@ public class RouteDataBuilderTest {
 
         assertEquals(false, routeData.authorization());
     }
+
+    @Test
+    public void issuesAFlagIfBadRequest() throws Exception {
+        HashMap<String, String> headers = new HashMap<>();
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("method", "");
+        attributes.put("path", "");
+        attributes.put("params", "");
+        attributes.put("headers", headers);
+
+        Request request = new Request(attributes);
+
+        RouteDataBuilder routeDataBuilder = new RouteDataBuilder();
+        RouteData routeData = routeDataBuilder.assembleRouteData(request);
+
+        assertEquals(true, routeData.badRequest());
+    }
 }
