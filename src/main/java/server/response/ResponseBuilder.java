@@ -16,18 +16,27 @@ public class ResponseBuilder {
     }
 
     public Response getResponse() throws IOException {
-        StatusHeaderBuilder statusBuilder = new StatusHeaderBuilder(routeData, response);
-        statusBuilder.assembleStatusHeader();
-
-        ContentBuilder contentBuilder = new ContentBuilder(request, routeData, response);
-        contentBuilder.assembleContent();
-
-        HeaderBuilder headerBuilder = new HeaderBuilder(routeData, response);
-        headerBuilder.assembleHeaders();
-
-        ParamProcessor paramProcessor = new ParamProcessor(request, routeData);
-        paramProcessor.process();
+        statusBuilder().assembleStatusHeader();
+        contentBuilder().assembleContent();
+        headerBuilder().assembleHeaders();
+        paramProcessor().process();
 
         return response;
+    }
+
+    private StatusHeaderBuilder statusBuilder() {
+        return new StatusHeaderBuilder(routeData, response);
+    }
+
+    private ContentBuilder contentBuilder() {
+        return new ContentBuilder(request, routeData, response);
+    }
+
+    private HeaderBuilder headerBuilder() {
+        return new HeaderBuilder(routeData, response);
+    }
+
+    private ParamProcessor paramProcessor() {
+        return new ParamProcessor(request, routeData);
     }
 }

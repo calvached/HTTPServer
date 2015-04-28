@@ -36,7 +36,6 @@ public class RequestStringReader {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
 
         return request;
