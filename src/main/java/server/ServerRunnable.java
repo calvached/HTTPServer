@@ -20,7 +20,6 @@ public class ServerRunnable implements Runnable{
                 router().directTrafficFor();
                 socket.close();
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }

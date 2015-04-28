@@ -26,15 +26,7 @@ public class HttpServer {
        return !executorService.isShutdown();
     }
 
-    private Socket getIncomingClientSocket() {
-        Socket incoming = null;
-
-        try {
-            incoming = serverSocket.accept();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return incoming;
+    private Socket getIncomingClientSocket() throws IOException {
+        return serverSocket.accept();
     }
 }

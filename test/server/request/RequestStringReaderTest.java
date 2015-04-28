@@ -1,6 +1,8 @@
 package server.request;
 
 import main.java.server.request.RequestStringReader;
+import mocks.ErrorInputStream;
+
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -10,7 +12,6 @@ import java.nio.charset.StandardCharsets;
 import static org.junit.Assert.assertEquals;
 
 public class RequestStringReaderTest {
-
     @Test
     public void concatenatesARequestIntoAString() throws Exception {
         String testString = "POST /form HTTP/1.1\nContent-Length: 32\n\n{ name=diana }\n";
@@ -42,6 +43,15 @@ public class RequestStringReaderTest {
         RequestStringReader reader =
                 new RequestStringReader(mockInputStream);
 
+        String request = reader.getConcatenatedRequest();
+
+        assertEquals("", request);
+    }
+
+    @Test
+    public void itReturnsAnEmptyStringIfIOExceptionIsThrown() throws Exception {
+        ErrorInputStream mockInputStream = new ErrorInputStream();
+        RequestStringReader reader = new RequestStringReader(mockInputStream);
         String request = reader.getConcatenatedRequest();
 
         assertEquals("", request);

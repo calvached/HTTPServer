@@ -14,7 +14,7 @@ public class ParamProcessor {
         routeData = clientRouteData;
     }
 
-    public void process() {
+    public void process() throws IOException {
         if (!routeData.notFound() && !routeData.methodNotAllowed()) {
             if (methodIs("POST")) {
                 add();
@@ -28,41 +28,26 @@ public class ParamProcessor {
         }
     }
 
-    private void delete() {
+    private void delete() throws IOException {
         File file = new File(routeData.contentPath());
 
-        FileWriter writer;
-        try {
-            writer = new FileWriter(file, false);
-            writer.write(" ");
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileWriter writer = new FileWriter(file, false);
+        writer.write(" ");
+        writer.close();
     }
 
-    private void update() {
+    private void update() throws IOException {
         File file = new File(routeData.contentPath());
 
-        FileWriter writer;
-        try {
-            writer = new FileWriter(file, false);
-            writer.write(request.params());
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileWriter writer = new FileWriter(file, false);
+        writer.write(request.params());
+        writer.close();
     }
 
-    private void add() {
-        PrintWriter writer;
-        try {
-            writer = new PrintWriter(routeData.contentPath(), "UTF-8");
-            writer.println(request.params());
-            writer.close();
-        } catch (FileNotFoundException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+    private void add() throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter writer = new PrintWriter(routeData.contentPath(), "UTF-8");
+        writer.println(request.params());
+        writer.close();
     }
 
     private boolean methodIs(String method) {

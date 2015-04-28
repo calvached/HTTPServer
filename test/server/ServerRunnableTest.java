@@ -1,6 +1,7 @@
 package server;
 
 import main.java.server.ServerRunnable;
+import mocks.ErrorSocket;
 import mocks.MockBadSocket;
 import mocks.MockSocket;
 import org.junit.Test;
@@ -40,5 +41,17 @@ public class ServerRunnableTest {
         String outputResponse = socket.getOutputStream().toString();
 
         assertEquals("HTTP/1.1 400 Bad Request\r\n\r\n", outputResponse);
+    }
+
+    @Test
+    public void itThrowsAnIOExceptionWhenClosing() {
+        ErrorSocket socket = new ErrorSocket();
+        ServerRunnable runner = new ServerRunnable(socket);
+
+        assertEquals(false, socket.isIOExceptionThrown());
+
+        runner.run();
+
+        assertEquals(true, socket.isIOExceptionThrown());
     }
 }
