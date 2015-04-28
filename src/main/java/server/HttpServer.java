@@ -1,31 +1,29 @@
 package main.java.server;
 
-import main.java.server.router.Router;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
 
 public class HttpServer {
     private ServerSocket serverSocket;
+    private ExecutorService executorService;
 
-    public HttpServer(ServerSocket boundSocket) {
-        serverSocket = boundSocket;
+    public HttpServer(ServerSocket serverSocket, ExecutorService executorService) {
+        this.serverSocket = serverSocket;
+        this.executorService = executorService;
     }
 
     public void start() throws IOException {
-        while (true){
+        while (threadPoolIsRunning()) {
             Socket clientSocket = getIncomingClientSocket();
 
-            if (!clientSocket.isClosed()) {
-                handle(clientSocket);
-                clientSocket.close();
-            } else {
-                break;
-            }
+            executorService.execute(new ServerRunnable(clientSocket));
         }
+    }
+
+    private boolean threadPoolIsRunning() {
+       return !executorService.isShutdown();
     }
 
     private Socket getIncomingClientSocket() {
@@ -38,17 +36,5 @@ public class HttpServer {
         }
 
         return incoming;
-    }
-
-    private void handle(Socket clientSocket) {
-        try {
-            InputStream in = clientSocket.getInputStream();
-            OutputStream out = clientSocket.getOutputStream();
-
-            Router router = new Router(in, out);
-            router.directTrafficFor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
