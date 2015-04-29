@@ -19,7 +19,7 @@ public class ContentBuilderTest {
 
     @Test
     public void itFindsContentForAGetRequest() throws Exception {
-        Path filePath = Paths.get("public/file.txt");
+        Path filePath = Paths.get("test/public/file.txt");
         String textToString = new String(Files.readAllBytes(filePath));
 
         HashMap <String, String> headers = new HashMap<>();
@@ -34,7 +34,7 @@ public class ContentBuilderTest {
 
         RouteData routeData = new RouteData();
         routeData.setIsFile(true);
-        routeData.setContentPath("public/file.txt");
+        routeData.setContentPath("test/public/file.txt");
 
         Response response = new Response();
 
@@ -48,7 +48,7 @@ public class ContentBuilderTest {
 
     @Test
     public void itFindsContentForADirectory() throws Exception {
-        File directoryFile = new File("public/");
+        File directoryFile = new File("test/public/");
 
         HashMap <String, String> headers = new HashMap<>();
 
@@ -62,7 +62,7 @@ public class ContentBuilderTest {
 
         RouteData routeData = new RouteData();
         routeData.setIsDirectory(true);
-        routeData.setContentPath("public/");
+        routeData.setContentPath("test/public/");
 
         Response response = new Response();
 
@@ -121,7 +121,7 @@ public class ContentBuilderTest {
 
     @Test
     public void itFindsPartialContentForRangeWithStartAndEnd() throws Exception {
-        Path filePath = Paths.get("public/partial_content.txt");
+        Path filePath = Paths.get("test/public/partial_content.txt");
         byte[] partialContent = Arrays.copyOfRange(
                 Files.readAllBytes(filePath), 0, 5);
 
@@ -138,7 +138,7 @@ public class ContentBuilderTest {
 
         RouteData routeData = new RouteData();
         routeData.setIsPartialContent(true);
-        routeData.setContentPath("public/partial_content.txt");
+        routeData.setContentPath("test/public/partial_content.txt");
 
         Response response = new Response();
 
@@ -153,7 +153,7 @@ public class ContentBuilderTest {
 
     @Test
     public void itFindsPartialContentForRangeWithStartOnly() throws Exception {
-        Path filePath = Paths.get("public/partial_content.txt");
+        Path filePath = Paths.get("test/public/partial_content.txt");
         byte[] fileBytes = Files.readAllBytes(filePath);
         byte[] partialContent = Arrays.copyOfRange(
                 fileBytes, 4, fileBytes.length);
@@ -171,7 +171,7 @@ public class ContentBuilderTest {
 
         RouteData routeData = new RouteData();
         routeData.setIsPartialContent(true);
-        routeData.setContentPath("public/partial_content.txt");
+        routeData.setContentPath("test/public/partial_content.txt");
 
         Response response = new Response();
 
@@ -186,7 +186,7 @@ public class ContentBuilderTest {
 
     @Test
     public void itFindsPartialContentForRangeWithEndOnly() throws Exception {
-        Path filePath = Paths.get("public/partial_content.txt");
+        Path filePath = Paths.get("test/public/partial_content.txt");
 
         byte[] fileBytes = Files.readAllBytes(filePath);
         byte[] partialContent = Arrays.copyOfRange(
@@ -205,7 +205,7 @@ public class ContentBuilderTest {
 
         RouteData routeData = new RouteData();
         routeData.setIsPartialContent(true);
-        routeData.setContentPath("public/partial_content.txt");
+        routeData.setContentPath("test/public/partial_content.txt");
 
         Response response = new Response();
 
