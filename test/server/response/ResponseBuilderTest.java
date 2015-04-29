@@ -18,7 +18,7 @@ public class ResponseBuilderTest {
 
     @Test
     public void itReturnsAResponseToAGet() throws Exception {
-        Path filePath = Paths.get("public/file.txt");
+        Path filePath = Paths.get("test/public/file.txt");
         String textToString = new String(Files.readAllBytes(filePath));
 
         HashMap<String, Object> attributes = new HashMap<>();
@@ -29,7 +29,7 @@ public class ResponseBuilderTest {
 
         RouteData routeData = new RouteData();
         routeData.setIsFile(true);
-        routeData.setContentPath("public/file.txt");
+        routeData.setContentPath("test/public/file.txt");
 
         ResponseBuilder responseBuilder = new ResponseBuilder(request, routeData);
         Response response = responseBuilder.getResponse();
@@ -49,7 +49,7 @@ public class ResponseBuilderTest {
         Request request = new Request(attributes);
 
         RouteData routeData = new RouteData();
-        routeData.setContentPath("public/postData.txt");
+        routeData.setContentPath("test/public/postData.txt");
 
         ResponseBuilder responseBuilder = new ResponseBuilder(request, routeData);
         Response response = responseBuilder.getResponse();
@@ -67,7 +67,7 @@ public class ResponseBuilderTest {
         Request request = new Request(attributes);
 
         RouteData routeData = new RouteData();
-        routeData.setContentPath("public/postData.txt");
+        routeData.setContentPath("test/public/postData.txt");
 
         ResponseBuilder responseBuilder = new ResponseBuilder(request, routeData);
         Response response = responseBuilder.getResponse();
@@ -85,7 +85,7 @@ public class ResponseBuilderTest {
         Request request = new Request(attributes);
 
         RouteData routeData = new RouteData();
-        routeData.setContentPath("public/postData.txt");
+        routeData.setContentPath("test/public/postData.txt");
 
         ResponseBuilder responseBuilder = new ResponseBuilder(request, routeData);
         Response response = responseBuilder.getResponse();
@@ -96,7 +96,7 @@ public class ResponseBuilderTest {
 
     @Test
     public void itReturnsAResponseWithALocationHeader() throws Exception {
-        File directoryFile = new File("public/");
+        File directoryFile = new File("test/public/");
 
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "GET");
@@ -105,7 +105,7 @@ public class ResponseBuilderTest {
         Request request = new Request(attributes);
 
         RouteData routeData = new RouteData();
-        routeData.setContentPath("public/");
+        routeData.setContentPath("test/public/");
         routeData.setIsDirectory(true);
         routeData.setIsRedirect(true);
         routeData.setRedirectPath("/");

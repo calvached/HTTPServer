@@ -21,12 +21,12 @@ public class ParamProcessorTest {
         Request request = new Request(attributes);
 
         RouteData routeData = new RouteData();
-        routeData.setContentPath("public/postData.txt");
+        routeData.setContentPath("test/public/postData.txt");
 
         ParamProcessor processor = new ParamProcessor(request, routeData);
         processor.process();
 
-        FileReader inputFile = new FileReader("public/postData.txt");
+        FileReader inputFile = new FileReader("test/public/postData.txt");
         BufferedReader reader = new BufferedReader(inputFile);
 
         String line = reader.readLine();
@@ -43,12 +43,12 @@ public class ParamProcessorTest {
         Request request = new Request(attributes);
 
         RouteData routeData = new RouteData();
-        routeData.setContentPath("public/postData.txt");
+        routeData.setContentPath("test/public/postData.txt");
 
         ParamProcessor processor = new ParamProcessor(request, routeData);
         processor.process();
 
-        FileReader inputFile = new FileReader("public/postData.txt");
+        FileReader inputFile = new FileReader("test/public/postData.txt");
         BufferedReader reader = new BufferedReader(inputFile);
 
         String line = reader.readLine();
@@ -62,16 +62,15 @@ public class ParamProcessorTest {
         attributes.put("method", "DELETE");
         attributes.put("path", "/form");
         attributes.put("params", "");
-        attributes.put("content", "public/postData.txt");
         Request request = new Request(attributes);
 
         RouteData routeData = new RouteData();
-        routeData.setContentPath("public/postData.txt");
+        routeData.setContentPath("test/public/postData.txt");
 
         ParamProcessor processor = new ParamProcessor(request, routeData);
         processor.process();
 
-        FileReader inputFile = new FileReader("public/postData.txt");
+        FileReader inputFile = new FileReader("test/public/postData.txt");
         BufferedReader reader = new BufferedReader(inputFile);
 
         String line = reader.readLine();
@@ -88,12 +87,12 @@ public class ParamProcessorTest {
         Request request = new Request(attributes);
 
         RouteData routeData = new RouteData();
-        routeData.setContentPath("public/postData.txt");
+        routeData.setContentPath("test/public/postData.txt");
 
         ParamProcessor processor = new ParamProcessor(request, routeData);
         processor.process();
 
-        FileReader inputFile = new FileReader("public/postData.txt");
+        FileReader inputFile = new FileReader("test/public/postData.txt");
         BufferedReader reader = new BufferedReader(inputFile);
 
         String line = reader.readLine();

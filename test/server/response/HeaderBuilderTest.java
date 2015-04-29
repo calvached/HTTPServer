@@ -14,7 +14,7 @@ public class HeaderBuilderTest {
         RouteData routeData = new RouteData();
         routeData.setIsRedirect(true);
         routeData.setRedirectPath("/");
-        routeData.setContentPath("public/");
+        routeData.setContentPath("test/public/");
 
         Response response = new Response();
 
@@ -27,7 +27,7 @@ public class HeaderBuilderTest {
     @Test
     public void itAssemblesAnAllowHeaderForOptions() throws Exception {
         RouteData routeData = new RouteData();
-        routeData.setContentPath("public/postData.txt");
+        routeData.setContentPath("test/public/postData.txt");
         routeData.setIsOptions(true);
         routeData.setAllowedMethods("GET, HEAD, POST, OPTIONS, PUT");
 
