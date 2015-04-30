@@ -1,4 +1,4 @@
-package main.java.server.response;
+package main.java.server.response.params;
 
 import main.java.server.request.Request;
 import main.java.server.routeData.RouteData;

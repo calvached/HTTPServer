@@ -1,4 +1,4 @@
-package main.java.server.response;
+package main.java.server.response.content;
 
 public class QueryStringDecoder {
     public String decode(String queryString) {

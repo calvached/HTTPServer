@@ -1,4 +1,6 @@
-package main.java.server.response;
+package main.java.server.sender;
+
+import main.java.server.response.Response;
 
 import java.io.IOException;
 import java.io.OutputStream;

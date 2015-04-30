@@ -1,6 +1,6 @@
-package server.response;
+package server.response.content;
 
-import main.java.server.response.QueryStringDecoder;
+import main.java.server.response.content.QueryStringDecoder;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

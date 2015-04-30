@@ -1,7 +1,7 @@
-package server.response;
+package server.response.content;
 
 import main.java.server.request.Request;
-import main.java.server.response.ContentBuilder;
+import main.java.server.response.content.ContentBuilder;
 import main.java.server.response.Response;
 import main.java.server.routeData.RouteData;
 import org.junit.Test;

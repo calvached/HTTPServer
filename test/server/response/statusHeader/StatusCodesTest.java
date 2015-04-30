@@ -1,6 +1,6 @@
-package server.response;
+package server.response.statusHeader;
 
-import main.java.server.response.StatusCodes;
+import main.java.server.response.statusHeader.StatusCodes;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

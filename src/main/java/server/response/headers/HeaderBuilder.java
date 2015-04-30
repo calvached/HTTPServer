@@ -1,5 +1,6 @@
-package main.java.server.response;
+package main.java.server.response.headers;
 
+import main.java.server.response.Response;
 import main.java.server.routeData.RouteData;
 
 public class HeaderBuilder {

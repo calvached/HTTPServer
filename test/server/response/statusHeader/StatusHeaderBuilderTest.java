@@ -1,7 +1,7 @@
-package server.response;
+package server.response.statusHeader;
 
 import main.java.server.response.Response;
-import main.java.server.response.StatusHeaderBuilder;
+import main.java.server.response.statusHeader.StatusHeaderBuilder;
 import main.java.server.routeData.RouteData;
 import org.junit.Test;
 

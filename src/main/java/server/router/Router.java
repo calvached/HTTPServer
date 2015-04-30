@@ -4,7 +4,7 @@ import main.java.server.request.Request;
 import main.java.server.request.RequestStringBuilder;
 import main.java.server.response.Response;
 import main.java.server.response.ResponseBuilder;
-import main.java.server.response.ResponseSender;
+import main.java.server.sender.ResponseSender;
 import main.java.server.routeData.RouteData;
 import main.java.server.routeData.RouteDataBuilder;
 
