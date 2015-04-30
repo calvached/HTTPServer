@@ -120,80 +120,13 @@ public class ContentBuilderTest {
     }
 
     @Test
-    public void itFindsPartialContentForRangeWithStartAndEnd() throws Exception {
+    public void itBuildsPartialContent() throws Exception {
         Path filePath = Paths.get("test/public/partial_content.txt");
         byte[] partialContent = Arrays.copyOfRange(
                 Files.readAllBytes(filePath), 0, 5);
 
         HashMap <String, String> headers = new HashMap<>();
         headers.put("Range", "bytes=0-4");
-
-        HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("method", "GET");
-        attributes.put("path", "/");
-        attributes.put("params", "");
-        attributes.put("headers", headers);
-
-        Request request = new Request(attributes);
-
-        RouteData routeData = new RouteData();
-        routeData.setIsPartialContent(true);
-        routeData.setContentPath("test/public/partial_content.txt");
-
-        Response response = new Response();
-
-        ContentBuilder contentBuilder = new ContentBuilder(request, routeData, response);
-        contentBuilder.assembleContent();
-
-        String bodyToString = new String(response.body());
-        String textToString = new String(partialContent);
-
-        assertEquals(textToString, bodyToString);
-    }
-
-    @Test
-    public void itFindsPartialContentForRangeWithStartOnly() throws Exception {
-        Path filePath = Paths.get("test/public/partial_content.txt");
-        byte[] fileBytes = Files.readAllBytes(filePath);
-        byte[] partialContent = Arrays.copyOfRange(
-                fileBytes, 4, fileBytes.length);
-
-        HashMap <String, String> headers = new HashMap<>();
-        headers.put("Range", "bytes=4-");
-
-        HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("method", "GET");
-        attributes.put("path", "/");
-        attributes.put("params", "");
-        attributes.put("headers", headers);
-
-        Request request = new Request(attributes);
-
-        RouteData routeData = new RouteData();
-        routeData.setIsPartialContent(true);
-        routeData.setContentPath("test/public/partial_content.txt");
-
-        Response response = new Response();
-
-        ContentBuilder contentBuilder = new ContentBuilder(request, routeData, response);
-        contentBuilder.assembleContent();
-
-        String bodyToString = new String(response.body());
-        String textToString = new String(partialContent);
-
-        assertEquals(textToString, bodyToString);
-    }
-
-    @Test
-    public void itFindsPartialContentForRangeWithEndOnly() throws Exception {
-        Path filePath = Paths.get("test/public/partial_content.txt");
-
-        byte[] fileBytes = Files.readAllBytes(filePath);
-        byte[] partialContent = Arrays.copyOfRange(
-                fileBytes, fileBytes.length - 6, fileBytes.length);
-
-        HashMap <String, String> headers = new HashMap<>();
-        headers.put("Range", "bytes=-6");
 
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("method", "GET");

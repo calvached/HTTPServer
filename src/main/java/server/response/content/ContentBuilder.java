@@ -10,9 +10,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ContentBuilder {
     private final Request request;
@@ -69,62 +66,15 @@ public class ContentBuilder {
     }
 
     private void buildPartialContent() throws IOException {
-        byte[] partialContent;
         Path filePath = Paths.get(path());
 
-        if (getRange().length() > 2) {
-            partialContent = getPartialContentWithRangeBoundariesPresent(filePath);
-        } else {
-            partialContent = getPartialContentWithMissingRangeBoundary(filePath);
-        }
+        byte[] partialContent = selector().getPartialContent(getRange(), filePath);
 
         response.setBody(partialContent);
     }
 
-    private byte[] getPartialContentWithMissingRangeBoundary(Path filePath) throws IOException {
-        Pattern method = Pattern.compile("-\\d+");
-        Matcher methodMatcher = method.matcher(getRange());
-        byte[] partialContent;
-        byte[] fileBytes = convertToBytes(filePath);
-
-        if (methodMatcher.find()) {
-            partialContent = getLastNBytes(fileBytes);
-        } else {
-            partialContent = getBytesFromStartingPoint(fileBytes);
-        }
-
-        return partialContent;
-    }
-
-    private byte[] getBytesFromStartingPoint(byte[] fileBytes) {
-        return Arrays.copyOfRange(
-                fileBytes,
-                getFirstBoundary(),
-                fileBytes.length);
-    }
-
-    private byte[] getLastNBytes(byte[] fileBytes) {
-        return Arrays.copyOfRange(
-                fileBytes,
-                findFirstBoundary(fileBytes),
-                fileBytes.length);
-    }
-
-    private int findFirstBoundary(byte[] fileBytes) {
-        return fileBytes.length + Integer.parseInt(getRange());
-    }
-
-    private int getFirstBoundary() {
-        return Integer.parseInt(getRange().split("-")[0]);
-    }
-
-    private byte[] getPartialContentWithRangeBoundariesPresent(Path filePath) throws IOException {
-        String[] boundaries = getRange().split("-");
-
-        return Arrays.copyOfRange(
-                convertToBytes(filePath),
-                Integer.parseInt(boundaries[0]),
-                Integer.parseInt(boundaries[1]) + 1);
+    private PartialContentSelector selector() {
+        return new PartialContentSelector();
     }
 
     private String getRange() {
