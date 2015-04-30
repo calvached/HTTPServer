@@ -8,6 +8,7 @@ import java.util.Arrays;
 public class RouteDataBuilder {
     private final ValidRoutes validRoutes = new ValidRoutes();
     private final RouteData routeData = new RouteData();
+    private final String CREDENTIALS = "Basic YWRtaW46aHVudGVyMg==";
 
     public RouteData assembleRouteData(Request request) {
         validatePath(request);
@@ -17,6 +18,7 @@ public class RouteDataBuilder {
 
     private void validatePath(Request request) {
         if (existingPathIsValid(request.path())) {
+            checkAuthentication(request);
             determinePathType(request);
             assignRouteDataContent(request);
         }
@@ -32,24 +34,49 @@ public class RouteDataBuilder {
         }
     }
 
-    private boolean badRequest(Request request) {
-        return request.path().equals("") || request.method().equals("");
-    }
-
     private boolean validPathWithQueryString(Request request) {
         String requestPath = splitPath(request)[0];
 
         return hasQueryString(request) && existingPathIsValid(requestPath);
     }
 
-    private String[] splitPath(Request request) {
-        return request.path().split("\\?");
-    }
-
     private boolean hasQueryString(Request request) {
         int splitPathSize = splitPath(request).length;
 
         return splitPathSize == 2;
+    }
+
+    private boolean badRequest(Request request) {
+        return request.path().equals("") || request.method().equals("");
+    }
+
+    private void checkAuthentication(Request request) {
+        if (requiresAuthentication(request.path())) {
+            routeData.setRequireAuthentication(true);
+            verifyAuthorization(request);
+        }
+    }
+
+    private boolean requiresAuthentication(String path) {
+        return validRoutes.routes.get(path).containsKey("requireAuthentication");
+    }
+
+    private void verifyAuthorization(Request request) {
+        if (authorizationKeyExists(request) && keyMatchesCredentials(request)) {
+            routeData.setAuthorization(true);
+        }
+    }
+
+    private boolean keyMatchesCredentials(Request request) {
+        return request.headers().get("Authorization").equals(CREDENTIALS);
+    }
+
+    private boolean authorizationKeyExists(Request request) {
+        return request.headers().containsKey("Authorization");
+    }
+
+    private String[] splitPath(Request request) {
+        return request.path().split("\\?");
     }
 
     private void determinePathType(Request request) {
@@ -70,32 +97,10 @@ public class RouteDataBuilder {
         else if (methodNotAllowed(request.path(), request.method())) {
             routeData.setMethodNotAllowed(true);
         }
-        else if (requiresAuthentication(request.path())) {
-            routeData.setRequireAuthentication(true);
-            verifyAuthorization(request);
-        }
-    }
-
-    private void verifyAuthorization(Request request) {
-        if (authorizationKeyExists(request) && keyMatchesCredentials(request)) {
-            routeData.setAuthorization(true);
-        }
-    }
-
-    private boolean keyMatchesCredentials(Request request) {
-        return request.headers().get("Authorization").equals("Basic YWRtaW46aHVudGVyMg==");
-    }
-
-    private boolean authorizationKeyExists(Request request) {
-        return request.headers().containsKey("Authorization");
-    }
-
-    private boolean requiresAuthentication(String path) {
-        return validRoutes.routes.get(path).containsKey("requireAuthentication");
     }
 
     private void assignRouteDataContent(Request request) {
-        if (contentExists(request)) {
+        if (contentExistsFor(request)) {
             routeData.setContentPath(getContentPath(request));
 
             File contentFile = new File(getContentPath(request));
@@ -110,10 +115,6 @@ public class RouteDataBuilder {
         }
     }
 
-    private String getRedirectContent() {
-        return (String) validRoutes.routes.get(routeData.redirectPath()).get("content");
-    }
-
     private void determineContentType(File contentFile) {
         if (contentFile.isDirectory()) {
             routeData.setIsDirectory(true);
@@ -122,8 +123,12 @@ public class RouteDataBuilder {
         }
     }
 
-    private boolean contentExists(Request request) {
+    private boolean contentExistsFor(Request request) {
         return validRoutes.routes.get(request.path()).containsKey("content");
+    }
+
+    private String getRedirectContent() {
+        return (String) validRoutes.routes.get(routeData.redirectPath()).get("content");
     }
 
     private String getContentPath(Request request) {
