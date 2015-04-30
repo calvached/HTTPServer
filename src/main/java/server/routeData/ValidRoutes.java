@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class ValidRoutes {
     public final Map<String, HashMap> routes = new HashMap<>();
+    private final String PUBLIC_DIR_PATH = "../cob_spec/public";
 
     {
         routes.put("/",                    indexPage());
@@ -55,7 +56,7 @@ public class ValidRoutes {
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("allowedMethods", methods);
-        data.put("content", "../cob_spec/public/" + file);
+        data.put("content", PUBLIC_DIR_PATH + "/" + file);
 
         return data;
     }
@@ -67,7 +68,7 @@ public class ValidRoutes {
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("allowedMethods", methods);
-        data.put("content", "../cob_spec/public/" +file);
+        data.put("content", PUBLIC_DIR_PATH + "/" + file);
 
         return data;
     }
@@ -79,7 +80,7 @@ public class ValidRoutes {
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("allowedMethods", methods);
-        data.put("content", "../cob_spec/public");
+        data.put("content", PUBLIC_DIR_PATH);
 
         return data;
     }
@@ -94,7 +95,7 @@ public class ValidRoutes {
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("allowedMethods", methods);
-        data.put("content", "../cob_spec/public/postData.txt");
+        data.put("content", PUBLIC_DIR_PATH + "/postData.txt");
 
         return data;
     }
@@ -110,7 +111,7 @@ public class ValidRoutes {
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("allowedMethods", methods);
-        data.put("content", "../cob_spec/public/postData.txt");
+        data.put("content", PUBLIC_DIR_PATH + "/postData.txt");
 
         return data;
     }
