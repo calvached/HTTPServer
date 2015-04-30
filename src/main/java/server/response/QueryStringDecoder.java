@@ -1,7 +1,21 @@
 package main.java.server.response;
 
 public class QueryStringDecoder {
-    public String decode(String parameter) {
+    public String decode(String queryString) {
+        String content = "";
+
+        for (String parameter : paramsFrom(queryString)) {
+            content += paramDecode(parameter) + "\r\n";
+        }
+
+        return content;
+    }
+
+    private String[] paramsFrom(String queryString) {
+        return queryString.split("&");
+    }
+
+    private String paramDecode(String parameter) {
         String decodedString = "";
         String[] parameterCharacterList = parameter.split("");
 

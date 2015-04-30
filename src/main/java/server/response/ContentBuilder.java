@@ -58,21 +58,13 @@ public class ContentBuilder {
     }
 
     private void buildContentFromQueryString() {
-        String content = "";
-
-        for (String parameter : paramsFromQueryString()) {
-            content += decoder().decode(parameter) + "\r\n";
-        }
+        String content = decoder().decode(routeData.queryString());
 
         response.setBody(convertToBytes(content));
     }
 
     private QueryStringDecoder decoder() {
         return new QueryStringDecoder();
-    }
-
-    private String[] paramsFromQueryString() {
-        return routeData.queryString().split("&");
     }
 
     private void buildPartialContent() throws IOException {
@@ -146,9 +138,7 @@ public class ContentBuilder {
     }
 
     private void assignTemplateToResponse(String template) {
-        byte[] templateBytes = convertToBytes(template);
-
-        response.setBody(templateBytes);
+        response.setBody(convertToBytes(template));
     }
 
     private byte[] convertToBytes(String template) {
