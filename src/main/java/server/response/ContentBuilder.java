@@ -61,32 +61,14 @@ public class ContentBuilder {
         String content = "";
 
         for (String parameter : paramsFromQueryString()) {
-            content += decode(parameter) + "\r\n";
+            content += decoder().decode(parameter) + "\r\n";
         }
 
         response.setBody(convertToBytes(content));
     }
 
-    private String decode(String parameter) {
-        String decodedString = "";
-        String[] parameterCharacterList = parameter.split("");
-
-        for (int i = 0; i < parameterCharacterList.length; i++) {
-            if (parameterCharacterList[i].equals("=")) {
-                decodedString += " " + parameterCharacterList[i] + " " ;
-            }
-            else if (parameterCharacterList[i].equals("%")) {
-                String hexSet = parameterCharacterList[i + 1] + parameterCharacterList[i + 2];
-                int decimal = Integer.parseInt(hexSet, 16);
-                decodedString += (char)decimal;
-
-                i += 2;
-            } else {
-                decodedString += parameterCharacterList[i];
-            }
-        }
-
-        return decodedString;
+    private QueryStringDecoder decoder() {
+        return new QueryStringDecoder();
     }
 
     private String[] paramsFromQueryString() {

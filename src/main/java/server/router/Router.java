@@ -18,7 +18,7 @@ public class Router {
         this.in = in;
         this.out = out;
     }
-    public void directTrafficFor() throws IOException {
+    public void directTraffic() throws IOException {
         Request request = getRequest();
         RouteData routeData = getRouteData(request);
         Response response = getResponse(request, routeData);

@@ -9,8 +9,7 @@ public class RequestStringReader {
     private BufferedReader reader;
 
     public RequestStringReader(InputStream inputStream) {
-        reader =
-                new BufferedReader(
+        reader = new BufferedReader(
                         new InputStreamReader(
                                 inputStream));
     }

@@ -31,5 +31,4 @@ public class ResponseSender {
     private byte[] convertToByteArray(String string) {
         return string.getBytes(Charset.forName("UTF-8"));
     }
-
 }

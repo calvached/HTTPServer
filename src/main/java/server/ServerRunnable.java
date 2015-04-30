@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 public class ServerRunnable implements Runnable{
-    private Socket socket;
+    private final Socket socket;
 
     public ServerRunnable(Socket clientSocket) {
         socket = clientSocket;
@@ -17,7 +17,7 @@ public class ServerRunnable implements Runnable{
     public void run() {
         if (!socket.isClosed()) {
             try {
-                router().directTrafficFor();
+                router().directTraffic();
                 socket.close();
             } catch (IOException e) {
             }

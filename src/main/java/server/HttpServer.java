@@ -16,9 +16,7 @@ public class HttpServer {
 
     public void start() throws IOException {
         while (threadPoolIsRunning()) {
-            Socket clientSocket = getIncomingClientSocket();
-
-            executorService.execute(new ServerRunnable(clientSocket));
+            executorService.execute(new ServerRunnable(clientSocket()));
         }
     }
 
@@ -26,7 +24,7 @@ public class HttpServer {
        return !executorService.isShutdown();
     }
 
-    private Socket getIncomingClientSocket() throws IOException {
+    private Socket clientSocket() throws IOException {
         return serverSocket.accept();
     }
 }
