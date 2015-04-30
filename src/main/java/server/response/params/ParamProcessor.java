@@ -1,4 +1,4 @@
-package main.java.server.response;
+package main.java.server.response.params;
 
 import main.java.server.request.Request;
 import main.java.server.routeData.RouteData;
@@ -28,7 +28,7 @@ public class ParamProcessor {
         }
     }
 
-    private void delete() throws IOException {
+    private synchronized void delete() throws IOException {
         File file = new File(routeData.contentPath());
 
         FileWriter writer = new FileWriter(file, false);
@@ -36,7 +36,7 @@ public class ParamProcessor {
         writer.close();
     }
 
-    private void update() throws IOException {
+    private synchronized void update() throws IOException {
         File file = new File(routeData.contentPath());
 
         FileWriter writer = new FileWriter(file, false);
@@ -44,8 +44,9 @@ public class ParamProcessor {
         writer.close();
     }
 
-    private void add() throws FileNotFoundException, UnsupportedEncodingException {
+    private synchronized void add() throws FileNotFoundException, UnsupportedEncodingException {
         PrintWriter writer = new PrintWriter(routeData.contentPath(), "UTF-8");
+
         writer.println(request.params());
         writer.close();
     }

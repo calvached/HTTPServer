@@ -1,7 +1,7 @@
-package server.response;
+package server.sender;
 
 import main.java.server.response.Response;
-import main.java.server.response.ResponseSender;
+import main.java.server.sender.ResponseSender;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;

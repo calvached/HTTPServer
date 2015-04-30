@@ -1,5 +1,6 @@
-package main.java.server.response;
+package main.java.server.response.statusHeader;
 
+import main.java.server.response.Response;
 import main.java.server.routeData.RouteData;
 
 public class StatusHeaderBuilder {

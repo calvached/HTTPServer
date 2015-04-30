@@ -1,6 +1,6 @@
-package server.response;
+package server.response.content;
 
-import main.java.server.response.DirectoryTemplate;
+import main.java.server.response.content.DirectoryTemplate;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -1,4 +1,4 @@
-package main.java.server.response;
+package main.java.server.response.statusHeader;
 
 import java.util.HashMap;
 import java.util.Map;

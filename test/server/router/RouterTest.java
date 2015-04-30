@@ -23,7 +23,7 @@ public class RouterTest {
                 new ByteArrayOutputStream();
 
         Router router = new Router(mockInputStream, mockOutputStream);
-        router.directTrafficFor();
+        router.directTraffic();
 
         assertEquals(
                 "HTTP/1.1 200 OK\r\n" +
@@ -52,7 +52,7 @@ public class RouterTest {
                 new ByteArrayOutputStream();
 
         Router router = new Router(mockInputStream, mockOutputStream);
-        router.directTrafficFor();
+        router.directTraffic();
 
         assertEquals(
                 "HTTP/1.1 200 OK",
@@ -70,7 +70,7 @@ public class RouterTest {
                 new ByteArrayOutputStream();
 
         Router router = new Router(mockInputStream, mockOutputStream);
-        router.directTrafficFor();
+        router.directTraffic();
 
         assertEquals("HTTP/1.1 404 Not Found",
                 mockOutputStream.toString().trim());
@@ -89,7 +89,7 @@ public class RouterTest {
                 new ByteArrayOutputStream();
 
         Router router = new Router(mockInputStream, mockOutputStream);
-        router.directTrafficFor();
+        router.directTraffic();
 
         assertEquals(
                 "HTTP/1.1 405 Method Not Allowed",

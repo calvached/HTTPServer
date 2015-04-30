@@ -1,7 +1,7 @@
-package server.response;
+package server.response.params;
 
 import main.java.server.request.Request;
-import main.java.server.response.ParamProcessor;
+import main.java.server.response.params.ParamProcessor;
 import main.java.server.routeData.RouteData;
 import org.junit.Test;
 
