@@ -34,7 +34,7 @@ public class ValidRoutesTest {
         HashMap data = validRoutes.routes.get("/");
         String content = (String) data.get("content");
 
-        assertEquals("../cob_spec/public", content);
+        assertEquals("./cob_spec/public", content);
     }
 
     @Test

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class ValidRoutes {
     public final Map<String, HashMap> routes = new HashMap<>();
-    private final String PUBLIC_DIR_PATH = "../cob_spec/public";
+    private final String PUBLIC_DIR_PATH = "./cob_spec/public";
 
     {
         routes.put("/",                    indexPage());
