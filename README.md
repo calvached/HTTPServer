@@ -49,8 +49,10 @@ __GET__
 Data is deleted.
 ## Cob Spec
 Cob spec is included in this project as a submodule.  
+RubySlim is included in this project as a submodule.  
 
-To setup, navigate to the cob_spec directory and follow the directions located [here](https://github.com/calvached/cob_spec/tree/http-server).
+__Note:__  
+Make sure to have the server running when testing with Cob Spec.
 ## Test Suite
 To run the unit tests, navigate to the root directory and execute:  
 `gradle check` or `gradle test`
