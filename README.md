@@ -12,6 +12,21 @@ To start the server:
 
 Use a web browser or Postman to interact with the server at:  
 `localhost:5000`
+## Cob Spec
+Cob spec is included in this project as a submodule.  
+RubySlim is included in this project as a submodule.  
+
+To run Cob Spec, execute:  
+`java -jar fitnesse.jar -p 9090`
+
+Then navigate to:  
+`http://localhost:9090/HttpTestSuite`
+
+__Note:__  
+Make sure to have the server running when testing with Cob Spec.
+## Test Suite
+To run the unit tests, navigate to the root directory and execute:  
+`gradle check` or `gradle test`
 ## How to demo GET/POST/PUT/DELETE with Postman
 Use [Postman](https://www.getpostman.com/) for GET, POST, PUT, and DELETE methods.
 
@@ -47,15 +62,6 @@ Deletes data.
 __GET__  
 `localhost:5000/form`  
 Data is deleted.
-## Cob Spec
-Cob spec is included in this project as a submodule.  
-RubySlim is included in this project as a submodule.  
-
-__Note:__  
-Make sure to have the server running when testing with Cob Spec.
-## Test Suite
-To run the unit tests, navigate to the root directory and execute:  
-`gradle check` or `gradle test`
 ## Contributing
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
