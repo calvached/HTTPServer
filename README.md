@@ -16,10 +16,12 @@ Use a web browser or Postman to interact with the server at:
 Cob spec is included in this project as a submodule.  
 RubySlim is included in this project as a submodule.  
 
-To run Cob Spec, execute:  
+To run Cob Spec, navigate to the cob_spec directory and execute:  
+`mvn package`  
+Then run Cob Spec with:  
 `java -jar fitnesse.jar -p 9090`
 
-Then navigate to:  
+Navigate to the following url to view Cob Spec:  
 `http://localhost:9090/HttpTestSuite`
 
 __Note:__  
