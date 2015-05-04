@@ -50,7 +50,7 @@ Data is deleted.
 ## Cob Spec
 Cob spec is included in this project as a submodule.  
 
-To setup, navigate to the cob_spec directory and follow the directions located [here](https://github.com/calvached/cob_spec/tree/c8f3369a397978573cb0c2a4781c73c744383dc4).
+To setup, navigate to the cob_spec directory and follow the directions located [here](https://github.com/calvached/cob_spec/tree/http-server).
 ## Test Suite
 To run the unit tests, navigate to the root directory and execute:  
 `gradle check` or `gradle test`
