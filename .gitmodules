@@ -1,3 +1,6 @@
 [submodule "cob_spec"]
 	path = cob_spec
 	url = https://github.com/calvached/cob_spec.git
+[submodule "RubySlim"]
+	path = RubySlim
+	url = https://github.com/unclebob/RubySlim
